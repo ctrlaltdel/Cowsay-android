@@ -3,8 +3,12 @@ package ch.fixme.cowsay;
 public class Cow
 {
 
-    String eyes;
-    String tongue;
+    String cow = "default"; //.cow
+    String eyes = "oo";
+    String tongue "  ";
+
+    String message = "I Love Android";
+    
     int face;
     private final int FACE_BORG = 1;
     private final int FACE_DEAD = 2;
@@ -28,6 +32,26 @@ public class Cow
     }
 
     void construct_face() {
+        switch(face){
+            case FACE_BORG:
+                eyes = "==";
+            case FACE_DEAD:
+                eyes = "xx";
+                tongue = "U ";
+            case FACE_GREEDY:
+                eyes = "\$\$";
+            case FACE_PARANOID:
+                eyes = "@@";
+            case FACE_STONED:
+                eyes = "**";
+                tongue = "U ";
+            case FACE_TIRED:
+                eyes = "..";
+            case FACE_WIRED:
+                eyes = "00";
+            case FACE_YOUNG:
+                eyes = "..";
+        }
     }
 
     String get_cow() {
