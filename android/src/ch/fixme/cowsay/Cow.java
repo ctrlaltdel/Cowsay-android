@@ -5,7 +5,7 @@ public class Cow
 
     String cow = "default"; //.cow
     String eyes = "oo";
-    String tongue "  ";
+    String tongue = "  ";
 
     String message = "I Love Android";
     
@@ -39,7 +39,7 @@ public class Cow
                 eyes = "xx";
                 tongue = "U ";
             case FACE_GREEDY:
-                eyes = "\$\$";
+                eyes = "$$";
             case FACE_PARANOID:
                 eyes = "@@";
             case FACE_STONED:
