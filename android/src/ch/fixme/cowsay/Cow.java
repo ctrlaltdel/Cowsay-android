@@ -1,15 +1,25 @@
 package ch.fixme.cowsay;
 
-import android.app.Activity;
-import android.os.Bundle;
-
-public class Cow extends Activity
+public class Cow
 {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+    void list_cowfiles() {
     }
+
+    void slurp_input() {
+    }
+
+   void maxlen() {
+   }
+
+   void construct_balloon() {
+   }
+
+   void construct_face() {
+   }
+
+   void get_cow() {
+   }
+
+   void display_usage() {
+   }
 }
