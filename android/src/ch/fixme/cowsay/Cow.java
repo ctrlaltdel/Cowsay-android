@@ -1,5 +1,7 @@
 package ch.fixme.cowsay;
 
+import android.content.Context;
+
 public class Cow
 {
     String cow = "default"; //.cow
@@ -20,9 +22,12 @@ public class Cow
     final int FACE_YOUNG = 8;
 
     final String format = "%s %s-%s %s\n";
+    
+    final Context context;
 
-    public Cow(String message) {
+    public Cow(Context myContext, String message) {
         this.message = message.split("\n"); // Always split (cowsay has a -n option not to split)
+        context = myContext;
         // Construct balloon
         // Construct face
     }
