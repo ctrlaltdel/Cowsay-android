@@ -30,10 +30,10 @@ public class Cow
     }
 
     public Cow(String message, String cow, String eyes, String tongue) {
-        this.cow = cow;
+    	this.cow = cow;
         this.eyes = eyes;
         this.tongue = tongue;
-        super(message);
+        //super(message);
     }
     
     public String get_cow() { // The method used in Main.java to get the constructed cow

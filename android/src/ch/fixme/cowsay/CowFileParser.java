@@ -1,3 +1,5 @@
+package ch.fixme.cowsay;
+
 import java.io.*;
 
 class CowFileParser {
