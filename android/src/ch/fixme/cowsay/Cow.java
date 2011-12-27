@@ -2,7 +2,6 @@ package ch.fixme.cowsay;
 
 public class Cow
 {
-
     String cow = "default"; //.cow
     String eyes = "oo";
     String tongue = "  ";
@@ -36,7 +35,7 @@ public class Cow
     //}
     
     public String get_cow() { // The method used in Main.java to get the constructed cow
-        return "";
+        return " _____________________\n< Java sucks big time >\n ---------------------\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
     }
 
 
