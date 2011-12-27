@@ -5,9 +5,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <TextView
-        android:id="@+id/thcow" 
+        android:id="@+id/thecow" 
         android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" 
+        android:layout_height="0dip" 
+        android:layout_weight="1"
         android:text="" />
+    <TextView
+        android:id="@+id/message" 
+        android:layout_width="0dip" 
+        android:layout_height="wrap_content" 
+        android:layout_weight="1"
+        android:text=""
+        android:hint="Message" />
+    <Button
+        android:id="@+id/btn_say"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="Say" />
+  
 </LinearLayout>
 
