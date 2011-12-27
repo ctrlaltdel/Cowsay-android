@@ -1,10 +1,17 @@
 package ch.fixme.cowsay;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.util.Log;
 
 public class Cow
 {
-    String cow = "default"; //.cow
+    String style = "default"; //.cow
     String eyes = "oo";
     String tongue = "  ";
     String thoughts = "";
@@ -40,11 +47,64 @@ public class Cow
     //}
     
     public String get_cow() { // The method used in Main.java to get the constructed cow
-        return " _____________________\n< Java sucks big time >\n ---------------------\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
+    	try {
+			AssetManager mngr = context.getAssets();
+			InputStream is = mngr.open("cows/" + style + ".cow");
+			return parse_cowfile(is);
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
     }
 
+    private String parse_cowfile(InputStream is) {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		StringBuilder sb = new StringBuilder();
+    	try {
+        	String line;
+    		// Jump to cow start
+    		do {
+    			line = br.readLine(); 
+    			Log.d("Cow", "Line: '" + line + "'");
+    		} while (line != null && !line.equals("$the_cow = <<\"EOC\";"));
+    		
+    		Log.d("Cow", "Got the cow!");
+    		
+			while ((line = br.readLine()) != null) {
+				Log.d("Cow", "Line: " + line);
 
-    private void list_cowfiles() {
+				if ((line.equals("EOC"))) {
+					break;
+				}
+								
+				sb.append(line + "\n");
+			}
+			
+			String text = sb.toString();
+			
+			text = text.replace("$eyes", eyes);
+			text = text.replace("$tongue", tongue);
+			text = text.replace("$thoughts", thoughts);
+			
+			return text;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "No cow available due to some parser crash, too bad!";
+		} 
+    }
+
+    private String[] list_cowfiles() {    	
+    	try {
+			String[] cows = context.getAssets().list("cows/");
+			return cows;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
 
     private void slurp_input() {
