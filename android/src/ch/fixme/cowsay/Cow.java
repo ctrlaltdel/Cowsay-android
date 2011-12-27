@@ -63,7 +63,7 @@ public class Cow
             thoughts = "\\";
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         }
-        // Draw balloon
+        // Draw balloon content
         if(message.length > 1){
             balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
             balloon += border[0] + message[0] + border[1];
@@ -71,6 +71,7 @@ public class Cow
                 balloon += border[4] + message[i] + border[5];
             }
             balloon += border[2] + message[message.length-1] + border[3];
+            balloon += " " + new String(new char[max2]).replace("\0", "-") + " \n";
         } else {
             balloon += border[0] + message[0] + border[1];
         }
