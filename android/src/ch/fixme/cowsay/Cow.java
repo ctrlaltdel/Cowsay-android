@@ -16,7 +16,7 @@ public class Cow
     private String tongue = "  ";
     private String thoughts = "";
     private String balloon = "";
-    private String[] message;
+    public String[] message;
    
     private int maxlen; 
     private int think = 0;
@@ -86,6 +86,8 @@ public class Cow
 			text = text.replace("$eyes", eyes);
 			text = text.replace("$tongue", tongue);
 			text = text.replace("$thoughts", thoughts);
+			
+			Log.d("Cow", "Returns: '" + text + "'");
 			
 			return text;
 		} catch (IOException e) {
