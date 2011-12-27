@@ -8,22 +8,25 @@
         android:id="@+id/thecow" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
-        android:layout_weight="1"
         android:text=""
         android:typeface="monospace" />
-    <EditText
-        android:id="@+id/message" 
-        android:layout_width="0dip" 
-        android:layout_height="wrap_content" 
-        android:layout_weight="1"
-        android:lines="1"
-        android:text=""
-        android:hint="Message" />
-    <Button
-        android:id="@+id/btn_say"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" 
-        android:text="Say" />
-  
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/message" 
+            android:layout_width="0dip" 
+            android:layout_height="fill_parent" 
+            android:layout_weight="1"
+            android:text=""
+            android:hint="Message" />
+        <Button
+            android:id="@+id/btn_say"
+            android:layout_width="wrap_content" 
+            android:layout_height="fill_parent" 
+            android:text="Say" />
+    </LinearLayout>
+
 </LinearLayout>
 

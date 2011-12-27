@@ -1,6 +1,7 @@
 package ch.fixme.cowsay;
 
 import android.util.Log;
+import android.content.Context;
 
 public class Cow
 {
@@ -26,11 +27,13 @@ public class Cow
     public static final int FACE_YOUNG = 8;
 
     private final int WRAPLEN = 40;
+    
+    final Context context;
 
-    public Cow(String message, String cow, int face) {
+    public Cow(Context myContext, String message, String cow, int face) {
+        context = myContext;
         this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
         this.message = message.split("\n");
-        Log.e("TEST", "message="+message);
         this.cow = cow;
         this.face = face;
         construct_balloon();
@@ -52,7 +55,7 @@ public class Cow
         if(think==1) {
             thoughts = "o";
             border = new char[] { '(',')','(',')','(',')' };
-        } else if(this.message.length < 2) {
+        } else if(message.length < 2) {
             thoughts = "\\";
             border = new char[] { '<','>' };
         } else {
@@ -60,7 +63,7 @@ public class Cow
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         }
         // Draw balloon
-        if(this.message.length > 1){
+        if(message.length > 1){
             balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
             balloon += border[0] + message[0] + border[1];
             for (int i = 1; i < message.length - 1; i++) {
@@ -70,7 +73,6 @@ public class Cow
         } else {
             balloon += border[0] + message[0] + border[1];
         }
-        Log.e("TEST", balloon);
     }
 
     private void construct_face() {
