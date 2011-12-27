@@ -1,91 +1,106 @@
 package ch.fixme.cowsay;
 
+import android.util.Log;
+
 public class Cow
 {
-    String cow = "default"; //.cow
-    String eyes = "oo";
-    String tongue = "  ";
-    String thoughts = "";
-    String[] message;
+    private String cow;
+    private String eyes = "oo";
+    private String tongue = "  ";
+    private String thoughts = "";
+    private String balloon = "";
+    private String[] message;
+    private String thecow = "          ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n"; 
+   
+    private int maxlen; 
+    private int think = 0;
+    private int face;
     
-    int think = 0;
-    int face;
-    final int FACE_BORG = 1;
-    final int FACE_DEAD = 2;
-    final int FACE_GREEDY = 3;
-    final int FACE_PARANOID = 4;
-    final int FACE_STONED = 5;
-    final int FACE_TIRED = 6;
-    final int FACE_WIRED = 7;
-    final int FACE_YOUNG = 8;
+    public static final int FACE_BORG = 1;
+    public static final int FACE_DEAD = 2;
+    public static final int FACE_GREEDY = 3;
+    public static final int FACE_PARANOID = 4;
+    public static final int FACE_STONED = 5;
+    public static final int FACE_TIRED = 6;
+    public static final int FACE_WIRED = 7;
+    public static final int FACE_YOUNG = 8;
 
-    final String format = "%s %s-%s %s\n";
+    private final int WRAPLEN = 40;
 
-    public Cow(String message) {
-        this.message = message.split("\n"); // Always split (cowsay has a -n option not to split)
-        // Construct balloon
-        // Construct face
+    public Cow(String message, String cow, int face) {
+        this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
+        this.message = message.split("\n");
+        Log.e("TEST", "message="+message);
+        this.cow = cow;
+        this.face = face;
+        construct_balloon();
+        construct_face();
     }
-
-    //public Cow(String message, String cow, String eyes, String tongue) {
-    //    this.cow = cow;
-    //    this.eyes = eyes;
-    //    this.tongue = tongue;
-    //    //super(message);
-    //}
     
-    public String get_cow() { // The method used in Main.java to get the constructed cow
-        return " _____________________\n< Java sucks big time >\n ---------------------\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
+    public String get_cow() {
+        return balloon + thecow;
     }
 
 
     private void list_cowfiles() {
     }
 
-    private void slurp_input() {
-    }
-
-    private int maxlen() {
-        return 10;
-    }
-
     private void construct_balloon() {
+        int max2 = maxlen + 2;
+        // up-left, up-right, down-left, down-right, left, right
         final char[] border;
-        //int max = maxlen(this.message);
-        int max = 10;
-        int max2 = max + 2;
         if(think==1) {
             thoughts = "o";
+            border = new char[] { '(',')','(',')','(',')' };
         } else if(this.message.length < 2) {
             thoughts = "\\";
-            border = new char[] { ' ' };
+            border = new char[] { '<','>' };
         } else {
             thoughts = "\\";
-            // up-left, up-right, down-left, down-right, left, right
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         }
+        // Draw balloon
+        if(this.message.length > 1){
+            balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
+            balloon += border[0] + message[0] + border[1];
+            for (int i = 1; i < message.length - 1; i++) {
+                balloon += border[4] + message[i] + border[5];
+            }
+            balloon += border[2] + message[message.length-1] + border[3];
+        } else {
+            balloon += border[0] + message[0] + border[1];
+        }
+        Log.e("TEST", balloon);
     }
 
     private void construct_face() {
         switch(face){
             case FACE_BORG:
                 eyes = "==";
+                break;
             case FACE_DEAD:
                 eyes = "xx";
                 tongue = "U ";
+                break;
             case FACE_GREEDY:
                 eyes = "$$";
+                break;
             case FACE_PARANOID:
                 eyes = "@@";
+                break;
             case FACE_STONED:
                 eyes = "**";
                 tongue = "U ";
-            case FACE_TIRED:
-                eyes = "..";
+                break;
             case FACE_WIRED:
                 eyes = "00";
+                break;
             case FACE_YOUNG:
+            case FACE_TIRED:
                 eyes = "..";
+                break;
+            default:
+                break;
         }
     }
 
