@@ -6,8 +6,10 @@ public class Cow
     String cow = "default"; //.cow
     String eyes = "oo";
     String tongue = "  ";
+    String thoughts = "";
     String[] message;
     
+    int think = 0;
     int face;
     final int FACE_BORG = 1;
     final int FACE_DEAD = 2;
@@ -18,23 +20,20 @@ public class Cow
     final int FACE_WIRED = 7;
     final int FACE_YOUNG = 8;
 
-    // up-left, up-right, down-left, down-right, left, right
-    final char[] border = new char[] { '/', '\\', '\\', '/', '|', '|' };
     final String format = "%s %s-%s %s\n";
 
     public Cow(String message) {
-        // Process message 
-        this.message = new String[]{};
+        this.message = message.split("\n"); // Always split (cowsay has a -n option not to split)
         // Construct balloon
         // Construct face
     }
 
-    public Cow(String message, String cow, String eyes, String tongue) {
-    	this.cow = cow;
-        this.eyes = eyes;
-        this.tongue = tongue;
-        //super(message);
-    }
+    //public Cow(String message, String cow, String eyes, String tongue) {
+    //    this.cow = cow;
+    //    this.eyes = eyes;
+    //    this.tongue = tongue;
+    //    //super(message);
+    //}
     
     public String get_cow() { // The method used in Main.java to get the constructed cow
         return "";
@@ -52,7 +51,19 @@ public class Cow
     }
 
     private void construct_balloon() {
-        int maxlen = maxlen();
+        final char[] border;
+        int max = maxlen(this.message);
+        int max2 = max + 2;
+        if(think==1) {
+            thoughts = "o";
+        } else if(this.message.length < 2) {
+            thoughts = "\\";
+            border = new char[] { ' ' };
+        } else {
+            thoughts = "\\";
+            // up-left, up-right, down-left, down-right, left, right
+            border = new char[] { '/', '\\', '\\', '/', '|', '|' };
+        }
     }
 
     private void construct_face() {
