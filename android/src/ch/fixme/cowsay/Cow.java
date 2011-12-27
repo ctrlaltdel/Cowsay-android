@@ -52,7 +52,8 @@ public class Cow
 
     private void construct_balloon() {
         final char[] border;
-        int max = maxlen(this.message);
+        //int max = maxlen(this.message);
+        int max = 10;
         int max2 = max + 2;
         if(think==1) {
             thoughts = "o";
