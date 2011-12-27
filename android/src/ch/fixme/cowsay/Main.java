@@ -16,14 +16,13 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Context ctxt = getApplicationContext();
-        
+        final Context ctxt = getApplicationContext();
         final EditText txt = (EditText) findViewById(R.id.message);
-        final Cow cow = new Cow(ctxt, txt.getText().toString(), "", 0);
-
+        
         ((Button) findViewById(R.id.btn_say)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                 ((TextView) findViewById(R.id.thecow)).setText(cow.get_cow());
+                final Cow cow = new Cow(ctxt, txt.getText().toString(), "", 0);
+                ((TextView) findViewById(R.id.thecow)).setText(cow.get_cow());
             }
         });
     }

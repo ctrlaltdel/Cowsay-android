@@ -31,6 +31,7 @@ public class Cow
     final Context context;
 
     public Cow(Context myContext, String message, String cow, int face) {
+        Log.e("TEST", "message="+message);
         context = myContext;
         this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
         this.message = message.split("\n");
