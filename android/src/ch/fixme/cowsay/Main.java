@@ -7,11 +7,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -25,6 +25,7 @@ public class Main extends Activity
     public void onCreate(Bundle savedInstanceState)
     {    	
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
         
         final Context ctxt = getApplicationContext();
@@ -32,12 +33,6 @@ public class Main extends Activity
         
         cow = new Cow(ctxt);
 
-        ((Button) findViewById(R.id.btn_say)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	cowRefresh();
-            }
-        });
-        
         TextWatcher myTextWatcher = new TextWatcher() {        	
         	public void onTextChanged(CharSequence s, int start, int before, int count) {
         		cowRefresh();
