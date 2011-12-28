@@ -109,34 +109,36 @@ public class Cow
 
     private String getBalloon() {
     	String balloon = "";
-        int maxlen = (message.length() > WRAPLEN) ? WRAPLEN : message.length();
+        int msglen = message.length();
+        int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen;
+        int max2 = maxlen + 2;
         // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if(think==1) {
             thoughts = "o";
             border = new char[] { '(',')','(',')','(',')' };
-        } else if(message.length() < WRAPLEN) {
-            thoughts = "\\";
-            border = new char[] { '<','>' };
-        } else {
+        } else if(msglen > WRAPLEN) {
             thoughts = "\\";
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
+        } else {
+            thoughts = "\\";
+            border = new char[] { '<','>' };
         }
         // Draw balloon content
-        balloon += " " + new String(new char[maxlen]).replace("\0", "_") + " \n";
-        if (message.length() > WRAPLEN) {
-            for (int i = 0; i < message.length(); i += WRAPLEN){
+        balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
+        if (msglen > WRAPLEN) {
+            for (int i = 0; i < msglen; i += WRAPLEN){
                 // First line
                 if(i < WRAPLEN){
                     balloon += border[0] +  " " + message.substring(0, WRAPLEN) + " " + border[1] + " \n";
                 } else {
                 // Last line
-                    int sublen = message.substring(i, message.length()-1).length();
+                    int sublen = message.substring(i, msglen-1).length();
                     if(sublen < WRAPLEN) {
                         int padlen = WRAPLEN - sublen;
                         String padding = new String(new char[padlen]).replace("\0", " ");
-                        balloon += border[2] + " " + message.substring(i, message.length()) + padding + border[3] + " \n";
+                        balloon += border[2] + " " + message.substring(i, msglen) + padding + border[3] + " \n";
                 // Middle line
                     } else {
                         balloon += border[4] + " " + message.substring(i, i+WRAPLEN) + " " + border[5] + " \n";
@@ -147,7 +149,7 @@ public class Cow
             balloon += border[0] + " " + message + " " + border[1] + " \n";
         }
         
-        balloon += " " + new String(new char[maxlen]).replace("\0", "-") + " \n";
+        balloon += " " + new String(new char[max2]).replace("\0", "-") + " \n";
         return balloon;
     }
 
