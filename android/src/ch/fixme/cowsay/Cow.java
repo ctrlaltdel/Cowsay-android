@@ -110,6 +110,7 @@ public class Cow
 
     private void construct_balloon() {
         int max2 = maxlen + 2;
+        // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if(think==1) {
@@ -123,17 +124,17 @@ public class Cow
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         }
         // Draw balloon content
+        balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
         if(message.length > 1){
-            balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
             balloon += border[0] + message[0] + border[1];
             for (int i = 1; i < message.length - 1; i++) {
                 balloon += border[4] + message[i] + border[5];
             }
-            balloon += border[2] + message[message.length-1] + border[3];
-            balloon += " " + new String(new char[max2]).replace("\0", "-") + " \n";
+            balloon += border[2] + message[message.length-1] + border[3] + " \n";
         } else {
-            balloon += border[0] + message[0] + border[1];
+            balloon += border[0] + message[0] + border[1] + " \n";
         }
+        balloon += " " + new String(new char[max2]).replace("\0", "-") + " \n";
     }
 
     private void construct_face() {
