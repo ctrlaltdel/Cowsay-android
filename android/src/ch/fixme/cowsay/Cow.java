@@ -41,19 +41,18 @@ public class Cow
         this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
         this.message = message.split("\n");
         this.face = face;
-        construct_balloon();
         construct_face();
     }
     
-    public String get_cow() {
+    public String asString() {
     	try {
 			AssetManager mngr = context.getAssets();
 			InputStream is = mngr.open("cows/" + style + ".cow");
-			return balloon + parse_cowfile(is);
+			return getBalloon() + parse_cowfile(is);
     	} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "";
+			return "No cow today";
 		}
     }
 
@@ -108,7 +107,8 @@ public class Cow
 		}
     }
 
-    private void construct_balloon() {
+    private String getBalloon() {
+    	String balloon = "";
         int max2 = maxlen + 2;
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
@@ -134,6 +134,8 @@ public class Cow
         } else {
             balloon += border[0] + message[0] + border[1];
         }
+        
+        return balloon;
     }
 
     private void construct_face() {

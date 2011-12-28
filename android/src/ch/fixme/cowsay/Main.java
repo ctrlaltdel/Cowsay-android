@@ -55,6 +55,6 @@ public class Main extends Activity
     	final EditText txt = (EditText) findViewById(R.id.message);
     	cow.message = txt.getText().toString().split("\n");
     			
-        ((TextView) findViewById(R.id.thecow)).setText(cow.get_cow());
+        ((TextView) findViewById(R.id.thecow)).setText(cow.asString());
     }
 }
