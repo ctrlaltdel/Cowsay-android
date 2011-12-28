@@ -35,7 +35,6 @@ public class Cow
     final Context context;
 
     public Cow(Context myContext) {
-        Log.e("TEST", "message="+message);
         context = myContext;
         construct_face();
     }
@@ -86,7 +85,6 @@ public class Cow
 			
 			return text;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "No cow available due to some parser crash, too bad!";
 		} 
@@ -94,8 +92,6 @@ public class Cow
 
     public String[] getCowTypes() { 
     	ArrayList res = new ArrayList();
-    	
-    	Log.d("Cow", "getCowTypes()");
     	try {
 			String[] cows = context.getAssets().list("cows");
 			for (int i = 0; i < cows.length; i++) {
@@ -103,9 +99,7 @@ public class Cow
 				
 				res.add(string.substring(0, string.length() - 4));
 			}
-			Log.d("Cow", "Got " + res.size() + " cows");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
