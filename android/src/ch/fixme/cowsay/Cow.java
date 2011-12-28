@@ -28,7 +28,7 @@ public class Cow
     public static final int FACE_WIRED = 7;
     public static final int FACE_YOUNG = 8;
 
-    private final int WRAPLEN = 40;
+    private final int WRAPLEN = 30;
     
     final Context context;
 
