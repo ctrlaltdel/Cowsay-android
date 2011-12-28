@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 public class Cow
 {
@@ -15,7 +14,6 @@ public class Cow
     private String eyes = "oo";
     private String tongue = "  ";
     private String thoughts = "";
-    private String balloon = "";
     public String[] message;
    
     private int maxlen; 
@@ -168,8 +166,5 @@ public class Cow
             default:
                 break;
         }
-    }
-
-    private void display_usage() {
     }
 }
