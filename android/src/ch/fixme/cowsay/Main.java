@@ -2,24 +2,50 @@ package ch.fixme.cowsay;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class Main extends Activity
 {    
 	private Cow cow;
+	
+    // Menu 
+	public static final int MENU_SHARE = Menu.FIRST;
+
+    /* Creates the menu items */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, MENU_SHARE, 0, "Share");
+        return true;
+    }
+    
+    /* Handles item selections */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_SHARE:
+            	Log.d("Main Menu", "Share");
+            	Intent intent = new Intent(Intent.ACTION_SEND);
+            	intent.setType("text/plain");
+            	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
+            	intent.putExtra(Intent.EXTRA_TEXT, cow.asString());
+            	startActivity(Intent.createChooser(intent, "Share with"));
+        }
+
+        return false;
+    }
+
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
