@@ -150,7 +150,20 @@ public class Main extends Activity
     	
     	final EditText txt = (EditText) findViewById(R.id.message);
     	cow.message = txt.getText().toString();
-    			
-        ((TextView) findViewById(R.id.thecow)).setText(cow.asString());
+    	
+    	String text = cow.asString();
+        ((TextView) findViewById(R.id.thecow)).setText(text);
+        
+        String[] lines = text.split("\n");
+        Integer width = 0;
+        Integer height = lines.length; 
+        
+        for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+			
+			if (line.length() > width) {
+				width = line.length();
+			}
+		}
     }
 }
