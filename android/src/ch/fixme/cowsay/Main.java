@@ -149,7 +149,8 @@ public class Main extends Activity
     	cow.message = txt.getText().toString();
     	
     	String text = cow.asString();
-        ((TextView) findViewById(R.id.thecow)).setText(text);
+    	cow.message = text;
+        outputView.setText(cow.asString());
         
         String[] lines = text.split("\n");
         Integer width = 0;
@@ -162,7 +163,5 @@ public class Main extends Activity
 				width = line.length();
 			}
 		}
-    	cow.message = messageView.getText().toString();
-        outputView.setText(cow.asString());
     }
 }
