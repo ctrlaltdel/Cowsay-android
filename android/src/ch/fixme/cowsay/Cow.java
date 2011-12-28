@@ -13,12 +13,12 @@ public class Cow
     private String style = "default";
     private String eyes = "oo";
     private String tongue = "  ";
-    private String thoughts = "";
+    public String thoughts = "";
     public String[] message;
    
     private int maxlen; 
     private int think = 0;
-    private int face;
+    public int face;
     
     public static final int FACE_BORG = 1;
     public static final int FACE_DEAD = 2;
@@ -33,12 +33,9 @@ public class Cow
     
     final Context context;
 
-    public Cow(Context myContext, String message, String cow, int face) {
+    public Cow(Context myContext) {
         Log.e("TEST", "message="+message);
         context = myContext;
-        this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
-        this.message = message.split("\n");
-        this.face = face;
         construct_face();
     }
     

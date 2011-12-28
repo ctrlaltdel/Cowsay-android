@@ -24,7 +24,7 @@ public class Main extends Activity
         final Context ctxt = getApplicationContext();
         final EditText txt = (EditText) findViewById(R.id.message);
         
-        cow = new Cow(ctxt, txt.getText().toString(), "", 0);
+        cow = new Cow(ctxt);
 
         ((Button) findViewById(R.id.btn_say)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -46,7 +46,8 @@ public class Main extends Activity
             }
         };
         
-        ((EditText) findViewById(R.id.message)).addTextChangedListener(myTextWatcher);
+        txt.addTextChangedListener(myTextWatcher);
+        txt.setText("Moo");
     }
     
     private void cowRefresh() {
