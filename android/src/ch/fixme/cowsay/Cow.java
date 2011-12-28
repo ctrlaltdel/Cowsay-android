@@ -1,17 +1,22 @@
 package ch.fixme.cowsay;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import android.util.Log;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.util.Log;
 
 public class Cow
 {
-    private String cow;
+    private String style = "default";
     private String eyes = "oo";
     private String tongue = "  ";
     private String thoughts = "";
     private String balloon = "";
-    private String[] message;
-    private String thecow = "          ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n"; 
+    public String[] message;
    
     private int maxlen; 
     private int think = 0;
@@ -35,18 +40,72 @@ public class Cow
         context = myContext;
         this.maxlen = (message.length() < WRAPLEN) ? message.length() : WRAPLEN;
         this.message = message.split("\n");
-        this.cow = cow;
         this.face = face;
         construct_balloon();
         construct_face();
     }
     
     public String get_cow() {
-        return balloon + thecow;
+    	try {
+			AssetManager mngr = context.getAssets();
+			InputStream is = mngr.open("cows/" + style + ".cow");
+			return balloon + parse_cowfile(is);
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
     }
 
+    private String parse_cowfile(InputStream is) {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		StringBuilder sb = new StringBuilder();
+    	try {
+        	String line;
+    		// Jump to cow start
+    		do {
+    			line = br.readLine(); 
+    			Log.d("Cow", "Line: '" + line + "'");
+    		} while (line != null && !line.equals("$the_cow = <<\"EOC\";"));
+    		
+    		Log.d("Cow", "Got the cow!");
+    		
+			while ((line = br.readLine()) != null) {
+				Log.d("Cow", "Line: " + line);
 
-    private void list_cowfiles() {
+				if ((line.equals("EOC"))) {
+					break;
+				}
+								
+				sb.append(line + "\n");
+			}
+			
+			String text = sb.toString();
+			
+			text = text.replace("$eyes", eyes);
+			text = text.replace("$tongue", tongue);
+			text = text.replace("$thoughts", thoughts);
+			
+			Log.d("Cow", "Returns: '" + text + "'");
+			
+			return text;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "No cow available due to some parser crash, too bad!";
+		} 
+    }
+
+    private String[] list_cowfiles() {    	
+    	try {
+			String[] cows = context.getAssets().list("cows/");
+			return cows;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
 
     private void construct_balloon() {
