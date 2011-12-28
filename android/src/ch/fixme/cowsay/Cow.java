@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
 
 public class Cow
 {
-    private String style = "default";
+    public String style = "default";
     private String eyes = "oo";
     private String tongue = "  ";
     public String thoughts = "";
@@ -90,15 +92,25 @@ public class Cow
 		} 
     }
 
-    private String[] list_cowfiles() {    	
+    public String[] getCowTypes() { 
+    	ArrayList res = new ArrayList();
+    	
+    	Log.d("Cow", "getCowTypes()");
     	try {
-			String[] cows = context.getAssets().list("cows/");
-			return cows;
+			String[] cows = context.getAssets().list("cows");
+			for (int i = 0; i < cows.length; i++) {
+				String string = cows[i];
+				
+				res.add(string.substring(0, string.length() - 4));
+			}
+			Log.d("Cow", "Got " + res.size() + " cows");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}
+    	
+    	String[] array = new String[res.size()];
+    	return (String[]) res.toArray(array);
     }
 
     private String getBalloon() {

@@ -7,8 +7,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class Main extends Activity
@@ -48,6 +54,42 @@ public class Main extends Activity
         
         txt.addTextChangedListener(myTextWatcher);
         txt.setText("Moo");
+        
+        populateCowTypes();
+    }
+    
+    private void populateCowTypes() {
+        // Populate the cow type Spinner widget        
+    	final String[] items = cow.getCowTypes();
+    	
+    	for (int i = 0; i < items.length; i++) {
+    		String item = items[i];
+    		Log.d("Main", "item: " + item);
+		}
+    
+        Spinner spinner = (Spinner) findViewById(R.id.type);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        
+        //s.setOnItemClickListener(new OnItemClickListener() {
+       	spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Log.d("Main", "Click");
+				cow.style = items[position];
+				cowRefresh();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
     }
     
     private void cowRefresh() {
