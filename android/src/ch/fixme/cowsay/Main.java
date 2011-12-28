@@ -25,6 +25,8 @@ import android.widget.TextView;
 public class Main extends Activity
 {    
 	private Cow cow;
+    private EditText messageView;
+    private TextView outputView;
 	
     // Menu 
 	public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -89,7 +91,8 @@ public class Main extends Activity
         setContentView(R.layout.main);
         
         final Context ctxt = getApplicationContext();
-        final EditText txt = (EditText) findViewById(R.id.message);
+        messageView = (EditText) findViewById(R.id.message);
+        outputView = (TextView) findViewById(R.id.thecow);
         
         cow = new Cow(ctxt);
 
@@ -107,8 +110,8 @@ public class Main extends Activity
             }
         };
         
-        txt.addTextChangedListener(myTextWatcher);
-        txt.setText("Moo");
+        messageView.addTextChangedListener(myTextWatcher);
+        messageView.setText("Moo");
         
         populateCowTypes();
     }
@@ -122,25 +125,19 @@ public class Main extends Activity
     		Log.d("Main", "item: " + item);
 		}
     
-        Spinner spinner = (Spinner) findViewById(R.id.type);
+        final Spinner spinner = (Spinner) findViewById(R.id.type);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         
-        //s.setOnItemClickListener(new OnItemClickListener() {
        	spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				Log.d("Main", "Click");
+			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
 				cow.style = items[position];
 				cowRefresh();
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
 			}
         });
     }
@@ -165,5 +162,7 @@ public class Main extends Activity
 				width = line.length();
 			}
 		}
+    	cow.message = messageView.getText().toString();
+        outputView.setText(cow.asString());
     }
 }

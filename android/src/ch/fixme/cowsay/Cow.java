@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import android.view.WindowManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -13,13 +15,13 @@ import android.content.res.AssetManager;
 public class Cow
 {
     public String style = "default";
-    private String eyes = "oo";
-    private String tongue = "  ";
+    private String eyes;
+    private String tongue;
     public String thoughts = "";
     public String message;
    
     private int think = 0;
-    public int face;
+    public int face = -1;
     
     public static final int FACE_BORG = 1;
     public static final int FACE_DEAD = 2;
@@ -34,9 +36,13 @@ public class Cow
     
     final Context context;
 
-    public Cow(Context myContext) {
-        context = myContext;
+    public Cow(Context context) {
+        this.context = context;
         construct_face();
+        DisplayMetrics dm = new DisplayMetrics();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(dm);
+        Log.e("Cow", "x="+dm.widthPixels);
+
     }
     
     public String asString() {
@@ -171,9 +177,12 @@ public class Cow
     }
 
     private void construct_face() {
+        eyes = "oo";
+        tongue = "  ";
         switch(face){
             case FACE_BORG:
                 eyes = "==";
+                tongue = "  ";
                 break;
             case FACE_DEAD:
                 eyes = "xx";
@@ -181,9 +190,11 @@ public class Cow
                 break;
             case FACE_GREEDY:
                 eyes = "$$";
+                tongue = "  ";
                 break;
             case FACE_PARANOID:
                 eyes = "@@";
+                tongue = "  ";
                 break;
             case FACE_STONED:
                 eyes = "**";
@@ -191,12 +202,12 @@ public class Cow
                 break;
             case FACE_WIRED:
                 eyes = "00";
+                tongue = "  ";
                 break;
             case FACE_YOUNG:
             case FACE_TIRED:
                 eyes = "..";
-                break;
-            default:
+                tongue = "  ";
                 break;
         }
     }
