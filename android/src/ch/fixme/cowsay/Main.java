@@ -3,7 +3,11 @@ package ch.fixme.cowsay;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore.Images;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,24 +27,54 @@ public class Main extends Activity
 	private Cow cow;
 	
     // Menu 
-	public static final int MENU_SHARE = Menu.FIRST;
+	public static final int MENU_SHARE_TEXT = Menu.FIRST;
+	public static final int MENU_SHARE_HTML = Menu.FIRST + 1;
+	public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
 
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_SHARE, 0, "Share");
+        menu.add(0, MENU_SHARE_TEXT, 0, "Share as text");
+        menu.add(0, MENU_SHARE_HTML, 0, "Share as HTML");
+        menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
         return true;
     }
     
     /* Handles item selections */
     public boolean onOptionsItemSelected(MenuItem item) {
+    	Intent intent = new Intent(Intent.ACTION_SEND);
+
         switch (item.getItemId()) {
-            case MENU_SHARE:
-            	Log.d("Main Menu", "Share");
-            	Intent intent = new Intent(Intent.ACTION_SEND);
+            case MENU_SHARE_TEXT:
+            	Log.d("Main Menu", "Share as text");
             	intent.setType("text/plain");
             	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
             	intent.putExtra(Intent.EXTRA_TEXT, cow.asString());
             	startActivity(Intent.createChooser(intent, "Share with"));
+        
+            case MENU_SHARE_HTML:
+            	Log.d("Main Menu", "Share as HTML");
+            	intent.setType("text/html");
+            	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
+            	intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.asString() + "</pre></html>");
+            	startActivity(Intent.createChooser(intent, "Share with"));
+            	
+            case MENU_SHARE_IMAGE:
+            	Log.d("Main Menu", "Share as image");
+            	
+            	View thecow = findViewById(R.id.thecow);
+            	Bitmap screenshot = Bitmap.createBitmap(thecow.getWidth(), thecow.getHeight(), Bitmap.Config.RGB_565);
+            	thecow.draw(new Canvas(screenshot));
+
+            	String path = Images.Media.insertImage(getContentResolver(), screenshot, "title", null);
+            	Uri screenshotUri = Uri.parse(path);
+
+            	final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            	emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	emailIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+            	emailIntent.setType("image/png");
+
+            	startActivity(Intent.createChooser(emailIntent, "Send email using"));
+
         }
 
         return false;
