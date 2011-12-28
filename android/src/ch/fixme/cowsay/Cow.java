@@ -16,9 +16,8 @@ public class Cow
     private String eyes = "oo";
     private String tongue = "  ";
     public String thoughts = "";
-    public String[] message;
+    public String message;
    
-    private int maxlen; 
     private int think = 0;
     public int face;
     
@@ -31,7 +30,7 @@ public class Cow
     public static final int FACE_WIRED = 7;
     public static final int FACE_YOUNG = 8;
 
-    private final int WRAPLEN = 40;
+    private final int WRAPLEN = 30;
     
     final Context context;
 
@@ -116,14 +115,14 @@ public class Cow
 
     private String getBalloon() {
     	String balloon = "";
-        int max2 = maxlen + 2;
+        int maxlen = (message.length() > WRAPLEN) ? WRAPLEN : message.length();
         // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if(think==1) {
             thoughts = "o";
             border = new char[] { '(',')','(',')','(',')' };
-        } else if(message.length < 2) {
+        } else if(message.length() < WRAPLEN) {
             thoughts = "\\";
             border = new char[] { '<','>' };
         } else {
@@ -131,18 +130,18 @@ public class Cow
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         }
         // Draw balloon content
-        balloon += " " + new String(new char[max2]).replace("\0", "_") + " \n";
-        if(message.length > 1){
-            balloon += border[0] + message[0] + border[1];
-            for (int i = 1; i < message.length - 1; i++) {
-                balloon += border[4] + message[i] + border[5];
-            }
-            balloon += border[2] + message[message.length-1] + border[3] + " \n";
+        balloon += " " + new String(new char[maxlen]).replace("\0", "_") + " \n";
+        if (message.length() > WRAPLEN) {
+            //balloon += border[0] + message[0] + border[1];
+            //for (int i = 1; i < message.length() - 1; i++) {
+            //    balloon += border[4] + message[i] + border[5];
+            //}
+            //balloon += border[2] + message[message.length-1] + border[3] + " \n";
         } else {
-            balloon += border[0] + message[0] + border[1] + " \n";
+            balloon += border[0] + message + border[1] + " \n";
         }
         
-        balloon += " " + new String(new char[max2]).replace("\0", "-") + " \n";
+        balloon += " " + new String(new char[maxlen]).replace("\0", "-") + " \n";
         return balloon;
     }
 
