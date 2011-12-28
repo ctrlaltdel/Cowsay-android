@@ -54,7 +54,7 @@ public class Main extends Activity
     	Log.d("Main", "Let's refresh the cow");
     	
     	final EditText txt = (EditText) findViewById(R.id.message);
-    	cow.message = txt.getText().toString().split("\n");
+    	cow.message = txt.getText().toString();
     			
         ((TextView) findViewById(R.id.thecow)).setText(cow.asString());
     }
