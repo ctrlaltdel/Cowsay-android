@@ -35,7 +35,6 @@ public class Cow
     final Context context;
 
     public Cow(Context myContext) {
-        Log.e("TEST", "message="+message);
         context = myContext;
         construct_face();
     }
@@ -99,11 +98,10 @@ public class Cow
 			text = text.replace("\\@", "@");
 			text = text.replace("\\\\", "\\");
 			
-			Log.d("Cow", "Returns: '" + text + "'");
+			Log.d("Cow", "Returns:\n'" + text + "'");
 			
 			return text;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "No cow available due to some parser crash, too bad!";
 		} 
@@ -111,8 +109,6 @@ public class Cow
 
     public String[] getCowTypes() { 
     	ArrayList res = new ArrayList();
-    	
-    	Log.d("Cow", "getCowTypes()");
     	try {
 			String[] cows = context.getAssets().list("cows");
 			for (int i = 0; i < cows.length; i++) {
@@ -120,9 +116,7 @@ public class Cow
 				
 				res.add(string.substring(0, string.length() - 4));
 			}
-			Log.d("Cow", "Got " + res.size() + " cows");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -150,21 +144,24 @@ public class Cow
         balloon += " " + new String(new char[maxlen]).replace("\0", "_") + " \n";
         if (message.length() > WRAPLEN) {
             for (int i = 0; i < message.length(); i += WRAPLEN){
-                if(i < WRAPLEN){ // First line
-                    balloon += border[0] + message.substring(0, WRAPLEN) + border[1] + " \n";
+                // First line
+                if(i < WRAPLEN){
+                    balloon += border[0] +  " " + message.substring(0, WRAPLEN) + " " + border[1] + " \n";
                 } else {
+                // Last line
                     int sublen = message.substring(i, message.length()-1).length();
-                    if(sublen < WRAPLEN) { // Last line
+                    if(sublen < WRAPLEN) {
                         int padlen = WRAPLEN - sublen;
                         String padding = new String(new char[padlen]).replace("\0", " ");
-                        balloon += border[2] + message.substring(i, message.length()-1) + padding + border[3] + " \n";
-                    } else { // Middle line
-                        balloon += border[4] + message.substring(i, i+WRAPLEN) + border[5] + " \n";
+                        balloon += border[2] + " " + message.substring(i, message.length()) + padding + border[3] + " \n";
+                // Middle line
+                    } else {
+                        balloon += border[4] + " " + message.substring(i, i+WRAPLEN) + " " + border[5] + " \n";
                     }
                 }
             }
         } else {
-            balloon += border[0] + message + border[1] + " \n";
+            balloon += border[0] + " " + message + " " + border[1] + " \n";
         }
         
         balloon += " " + new String(new char[maxlen]).replace("\0", "-") + " \n";
