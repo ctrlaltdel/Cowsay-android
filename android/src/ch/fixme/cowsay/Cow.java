@@ -53,22 +53,31 @@ public class Cow
 
     private String parse_cowfile(InputStream is) {
     	BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		
 		StringBuilder sb = new StringBuilder();
+		
     	try {
         	String line;
     		// Jump to cow start
-    		do {
-    			line = br.readLine(); 
-    			Log.d("Cow", "Line: '" + line + "'");
-    		} while (line != null && !line.equals("$the_cow = <<\"EOC\";"));
+    		while (true) {
+    			line = br.readLine();
+    			Log.d("Cow", "Line: " + line);
+    		  
+    			if (line == null) {
+    				return "Cow parsing failure";
+    			};
+    			
+    			if (line.contains("$the_cow =")) { 
+    				break;
+    			};
+    		}
     		
     		Log.d("Cow", "Got the cow!");
     		
 			while ((line = br.readLine()) != null) {
 				Log.d("Cow", "Line: " + line);
 
-				if ((line.equals("EOC"))) {
+				if ((line.contains("EOC") || line.contains("EOF"))) {
+					Log.d("Cow", "End of cow found");
 					break;
 				}
 								
@@ -77,9 +86,17 @@ public class Cow
 			
 			String text = sb.toString();
 			
+			Log.d("Cow", "Before replacment: '" + text + "'");
+			
 			text = text.replace("$eyes", eyes);
+			text = text.replace("${eyes}", eyes);
 			text = text.replace("$tongue", tongue);
+			text = text.replace("${tongue}", tongue);
 			text = text.replace("$thoughts", thoughts);
+			text = text.replace("${thoughts}", thoughts);
+			
+			text = text.replace("\\@", "@");
+			text = text.replace("\\\\", "\\");
 			
 			Log.d("Cow", "Returns:\n'" + text + "'");
 			
