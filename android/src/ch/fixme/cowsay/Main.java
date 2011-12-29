@@ -1,7 +1,10 @@
 package ch.fixme.cowsay;
 
-import android.util.TypedValue;
 import java.lang.Math;
+
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetricsInt;
+import android.util.TypedValue;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.app.Activity;
@@ -30,7 +33,7 @@ public class Main extends Activity
 {    
 	private Cow cow;
     private EditText messageView;
-    private AutoResizeTextView outputView;
+    private TextView outputView;
 	
     // Menu 
 	public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -96,8 +99,7 @@ public class Main extends Activity
         
         final Context ctxt = getApplicationContext();
         messageView = (EditText) findViewById(R.id.message);
-        outputView = (AutoResizeTextView) findViewById(R.id.thecow);
-        outputView.setAddEllipsis(false);
+        outputView = (TextView) findViewById(R.id.thecow);
         
         cow = new Cow(ctxt);
 
@@ -149,12 +151,7 @@ public class Main extends Activity
     
     private void cowRefresh() {
     	Log.d("Main", "Let's refresh the cow");
-    	
-    	final EditText txt = (EditText) findViewById(R.id.message);
-    	cow.message = txt.getText().toString();
-    	String text = cow.asString();
-        outputView.setText(text);
-        
-        outputView.setBackgroundColor(0xfff00000);
+    	cow.message = messageView.getText().toString();
+        outputView.setText(cow.asString());
     }
 }
