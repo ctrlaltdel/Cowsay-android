@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import android.view.WindowManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -39,9 +37,6 @@ public class Cow
     public Cow(Context context) {
         this.context = context;
         construct_face();
-        DisplayMetrics dm = new DisplayMetrics();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(dm);
-        Log.e("Cow", "x="+dm.widthPixels);
 
     }
     

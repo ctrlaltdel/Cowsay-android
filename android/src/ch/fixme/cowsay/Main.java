@@ -1,5 +1,9 @@
 package ch.fixme.cowsay;
 
+import android.util.TypedValue;
+import java.lang.Math;
+import android.view.WindowManager;
+import android.util.DisplayMetrics;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -147,10 +151,8 @@ public class Main extends Activity
     	
     	final EditText txt = (EditText) findViewById(R.id.message);
     	cow.message = txt.getText().toString();
-    	
     	String text = cow.asString();
-    	cow.message = text;
-        outputView.setText(cow.asString());
+        outputView.setText(text);
         
         String[] lines = text.split("\n");
         Integer width = 0;
@@ -163,5 +165,10 @@ public class Main extends Activity
 				width = line.length();
 			}
 		}
+
+        //View container = findViewById(R.id.container);
+        //int textHeight = (container.getHeight()) / height;
+        //int textWidth = (container.getWidth()) / width;
+        //outputView.setTextSize(TypedValue.COMPLEX_UNIT_DP, Math.min(textHeight, textWidth));
     }
 }
