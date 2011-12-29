@@ -123,15 +123,11 @@ public class Main extends Activity
     private void populateCowTypes() {
         // Populate the cow type Spinner widget        
     	final String[] items = cow.getCowTypes();
-    	
-    	for (int i = 0; i < items.length; i++) {
-    		String item = items[i];
-    		Log.d("Main", "item: " + item);
-		}
-    
         final Spinner spinner = (Spinner) findViewById(R.id.type);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
+        spinner.setSelection(3);
        	spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -147,7 +143,6 @@ public class Main extends Activity
     }
     
     private void cowRefresh() {
-    	Log.d("Main", "Let's refresh the cow");
     	cow.message = messageView.getText().toString();
         outputView.setText(cow.getFinalCow());
     }

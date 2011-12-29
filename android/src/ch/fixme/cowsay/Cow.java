@@ -67,9 +67,7 @@ public class Cow
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	
-    	String[] array = new String[res.size()];
-    	return (String[]) res.toArray(array);
+    	return (String[]) res.toArray(new String[res.size()]);
     }
 
     private String getBalloon() {

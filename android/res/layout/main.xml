@@ -12,7 +12,8 @@
     <Spinner
         android:id="@+id/type"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:prompt="@string/type_prompt" />
 
     <HorizontalScrollView
         android:layout_width="fill_parent"
