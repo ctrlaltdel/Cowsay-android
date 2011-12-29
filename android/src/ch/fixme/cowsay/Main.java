@@ -127,7 +127,7 @@ public class Main extends Activity
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
-        spinner.setSelection(3);
+        spinner.setSelection(11);
        	spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
