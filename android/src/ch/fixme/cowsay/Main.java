@@ -57,14 +57,14 @@ public class Main extends Activity
             	Log.d("Main Menu", "Share as text");
             	intent.setType("text/plain");
             	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
-            	intent.putExtra(Intent.EXTRA_TEXT, cow.asString());
+            	intent.putExtra(Intent.EXTRA_TEXT, cow.getFinalCow());
             	startActivity(Intent.createChooser(intent, "Share with"));
         
             case MENU_SHARE_HTML:
             	Log.d("Main Menu", "Share as HTML");
             	intent.setType("text/html");
             	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
-            	intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.asString() + "</pre></html>");
+            	intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.getFinalCow() + "</pre></html>");
             	startActivity(Intent.createChooser(intent, "Share with"));
             	
             case MENU_SHARE_IMAGE:
@@ -96,31 +96,28 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        
+       
+        // Initialize objects and ui access 
         final Context ctxt = getApplicationContext();
-        messageView = (EditText) findViewById(R.id.message);
-        outputView = (TextView) findViewById(R.id.thecow);
-        
         cow = new Cow(ctxt);
+        populateCowTypes();
+        outputView = (TextView) findViewById(R.id.thecow);
+        messageView = (EditText) findViewById(R.id.message);
+        messageView.setText("Moo");
 
+        // Real time update
         TextWatcher myTextWatcher = new TextWatcher() {        	
         	public void onTextChanged(CharSequence s, int start, int before, int count) {
         		cowRefresh();
         	}
-        	
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
             }
         };
-        
         messageView.addTextChangedListener(myTextWatcher);
-        messageView.setText("Moo");
-        
-        populateCowTypes();
     }
     
     private void populateCowTypes() {
@@ -135,11 +132,11 @@ public class Main extends Activity
         final Spinner spinner = (Spinner) findViewById(R.id.type);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
         spinner.setAdapter(adapter);
-        
        	spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
 				cow.style = items[position];
+                cow.getCowFile();
 				cowRefresh();
 			}
 
@@ -152,6 +149,6 @@ public class Main extends Activity
     private void cowRefresh() {
     	Log.d("Main", "Let's refresh the cow");
     	cow.message = messageView.getText().toString();
-        outputView.setText(cow.asString());
+        outputView.setText(cow.getFinalCow());
     }
 }
