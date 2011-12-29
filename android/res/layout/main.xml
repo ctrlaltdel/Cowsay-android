@@ -22,8 +22,8 @@
         android:gravity="center_horizontal|bottom">
         <ch.fixme.cowsay.AutoResizeTextView
             android:id="@+id/thecow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:gravity="bottom"
             android:textColor="#00ff00"
             android:typeface="monospace" />

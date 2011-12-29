@@ -6,6 +6,7 @@ import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ import android.widget.TextView;
 public class AutoResizeTextView extends TextView {
 
     // Minimum text size for this text view
-    public static final float MIN_TEXT_SIZE = 20;
+    public static final float MIN_TEXT_SIZE = 15;
 
     // Interface for resize notifications
     public interface OnTextResizeListener {
@@ -221,6 +222,8 @@ public class AutoResizeTextView extends TextView {
      * @param height
      */
     public void resizeText(int width, int height) {
+    	Log.d("AutoResizeTextView", "width: " + width + " height: " + height);
+    	
         CharSequence text = getText();
         // Do not resize if the view does not have dimensions or there is no text
         if(text == null || text.length() == 0 || height <= 0 || width <= 0 || mTextSize == 0) {

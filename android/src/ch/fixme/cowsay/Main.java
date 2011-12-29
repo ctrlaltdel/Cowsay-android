@@ -30,7 +30,7 @@ public class Main extends Activity
 {    
 	private Cow cow;
     private EditText messageView;
-    private TextView outputView;
+    private AutoResizeTextView outputView;
 	
     // Menu 
 	public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -96,7 +96,8 @@ public class Main extends Activity
         
         final Context ctxt = getApplicationContext();
         messageView = (EditText) findViewById(R.id.message);
-        outputView = (TextView) findViewById(R.id.thecow);
+        outputView = (AutoResizeTextView) findViewById(R.id.thecow);
+        outputView.setAddEllipsis(false);
         
         cow = new Cow(ctxt);
 
@@ -153,5 +154,7 @@ public class Main extends Activity
     	cow.message = txt.getText().toString();
     	String text = cow.asString();
         outputView.setText(text);
+        
+        outputView.setBackgroundColor(0xfff00000);
     }
 }
