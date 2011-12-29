@@ -12,15 +12,15 @@ import android.content.res.AssetManager;
 
 public class Cow
 {
-    public String style = "default";
+    public int face = -1;
+    public String style;
+    public String thoughts;
+    public String message;
+    
+    private int think = 0;
     private String rawCow;
     private String eyes;
     private String tongue;
-    public String thoughts = "";
-    public String message;
-   
-    private int think = 0;
-    public int face = -1;
     
     public static final int FACE_BORG = 1;
     public static final int FACE_DEAD = 2;
@@ -78,13 +78,10 @@ public class Cow
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if(think==1) {
-            thoughts = "o";
             border = new char[] { '(',')','(',')','(',')' };
         } else if(msglen > WRAPLEN) {
-            thoughts = "\\";
             border = new char[] { '/', '\\', '\\', '/', '|', '|' };
         } else {
-            thoughts = "\\";
             border = new char[] { '<','>' };
         }
         // Draw balloon content
@@ -149,6 +146,11 @@ public class Cow
     }
 
     private void construct_face() {
+        if(think==1) {
+            thoughts = "o";
+        } else {
+            thoughts = "\\";
+        }
         eyes = "oo";
         tongue = "  ";
         switch(face){
