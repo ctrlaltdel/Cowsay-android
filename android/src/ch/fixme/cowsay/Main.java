@@ -101,6 +101,7 @@ public class Main extends Activity
         final Context ctxt = getApplicationContext();
         cow = new Cow(ctxt);
         populateCowTypes();
+        populateCowFaces();
         outputView = (TextView) findViewById(R.id.thecow);
         messageView = (EditText) findViewById(R.id.message);
         messageView.setText("Moo");
@@ -135,7 +136,25 @@ public class Main extends Activity
                 cow.getCowFile();
 				cowRefresh();
 			}
-
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+        });
+    }
+    
+    private void populateCowFaces() {
+        // Populate the cow face Spinner widget        
+        Spinner s = (Spinner) findViewById(R.id.face);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.faces, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        s.setAdapter(adapter);
+        s.setSelection(0);
+       	s.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
+				cow.face = position;
+				cowRefresh();
+			}
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Cowsay</string>
     <string name="type_prompt">Select a Cow :</string>
+    <string name="face_prompt">Select a face :</string>
 </resources>

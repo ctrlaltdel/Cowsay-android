@@ -12,7 +12,7 @@ import android.content.res.AssetManager;
 
 public class Cow
 {
-    public int face = -1;
+    public int face;
     public String style;
     public String thoughts;
     public String message;
@@ -22,6 +22,7 @@ public class Cow
     private String eyes;
     private String tongue;
     
+    public static final int FACE_DEFAULT = 0;
     public static final int FACE_BORG = 1;
     public static final int FACE_DEAD = 2;
     public static final int FACE_GREEDY = 3;
@@ -74,6 +75,7 @@ public class Cow
     	String balloon = "";
         int msglen = message.length();
         int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen+ 2;
+        message = message.replace("\n", ""); //TODO: handle multiline input
         // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
