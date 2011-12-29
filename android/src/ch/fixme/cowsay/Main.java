@@ -153,22 +153,5 @@ public class Main extends Activity
     	cow.message = txt.getText().toString();
     	String text = cow.asString();
         outputView.setText(text);
-        
-        String[] lines = text.split("\n");
-        Integer width = 0;
-        Integer height = lines.length; 
-        
-        for (int i = 0; i < lines.length; i++) {
-			String line = lines[i];
-			
-			if (line.length() > width) {
-				width = line.length();
-			}
-		}
-
-        //View container = findViewById(R.id.container);
-        //int textHeight = (container.getHeight()) / height;
-        //int textWidth = (container.getWidth()) / width;
-        //outputView.setTextSize(TypedValue.COMPLEX_UNIT_DP, Math.min(textHeight, textWidth));
     }
 }
