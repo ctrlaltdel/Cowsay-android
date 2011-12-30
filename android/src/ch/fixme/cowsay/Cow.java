@@ -73,9 +73,9 @@ public class Cow
 
     private String getBalloon() {
     	String balloon = "";
+        message = message.replace("\n", ""); //TODO: handle multiline input
         int msglen = message.length();
         int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen+ 2;
-        message = message.replace("\n", ""); //TODO: handle multiline input
         // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
