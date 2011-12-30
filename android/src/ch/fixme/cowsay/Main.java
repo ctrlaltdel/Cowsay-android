@@ -1,7 +1,7 @@
 package ch.fixme.cowsay;
 
 import java.lang.Math;
-
+import android.text.Selection;
 import android.text.method.ScrollingMovementMethod;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetricsInt;
@@ -34,7 +34,7 @@ public class Main extends Activity
 {    
 	private Cow cow;
     private EditText messageView;
-    private TextFitTextView outputView;
+    private TextView outputView;
 	
     // Menu 
 	public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -105,7 +105,7 @@ public class Main extends Activity
         cow = new Cow(ctxt);
         populateCowTypes();
         populateCowFaces();
-        outputView = (TextFitTextView) findViewById(R.id.thecow);
+        outputView = (TextView) findViewById(R.id.thecow);
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         messageView = (EditText) findViewById(R.id.message);
         messageView.setText("Moo");

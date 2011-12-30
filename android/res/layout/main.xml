@@ -28,14 +28,17 @@
             android:prompt="@string/face_prompt" />
     </LinearLayout>
 
-    <ch.fixme.cowsay.TextFitTextView
+    <TextView
         android:id="@+id/thecow"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:textColor="#00ff00"
         android:typeface="monospace"
-        android:gravity="bottom" />
+        android:gravity="bottom"
+        android:singleLine="false"
+        android:scrollHorizontally="true"
+        android:scrollbars="vertical|horizontal" />
 
     <EditText
         android:id="@+id/message" 

@@ -1,5 +1,6 @@
 package ch.fixme.cowsay;
 
+import  java.lang.StringBuffer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,10 +73,9 @@ public class Cow
     }
 
     private String getBalloon() {
-    	String balloon = "";
         message = message.replace("\n", ""); //TODO: handle multiline input
         int msglen = message.length();
-        int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen+ 2;
+        int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen;
         // Balloon borders
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
@@ -87,31 +87,32 @@ public class Cow
             border = new char[] { '<','>' };
         }
         // Draw balloon content
-        balloon += " " + new String(new char[maxlen]).replace("\0", "_") + " \n";
+    	StringBuffer balloon = new StringBuffer();
+        balloon.append(" ").append(new String(new char[maxlen+2]).replace("\0", "_")).append(" \n"); // append(char[] chars, int start, int length)
         if (msglen > WRAPLEN) {
             for (int i = 0; i < msglen; i += WRAPLEN){
                 // First line
                 if(i < WRAPLEN){
-                    balloon += border[0] +  " " + message.substring(0, WRAPLEN) + " " + border[1] + " \n";
+                    balloon.append(border[0]).append(" ").append(message.substring(0, WRAPLEN)).append(" ").append(border[1]).append(" \n");
                 } else {
                 // Last line
                     int sublen = message.substring(i, msglen-1).length();
                     if(sublen < WRAPLEN) {
                         int padlen = WRAPLEN - sublen;
                         String padding = new String(new char[padlen]).replace("\0", " ");
-                        balloon += border[2] + " " + message.substring(i, msglen) + padding + border[3] + " \n";
+                        balloon.append(border[2]).append(" ").append(message.substring(i, msglen)).append(padding).append(border[3]).append(" \n");
                 // Middle line
                     } else {
-                        balloon += border[4] + " " + message.substring(i, i+WRAPLEN) + " " + border[5] + " \n";
+                        balloon.append(border[4]).append(" ").append(message.substring(i, i+WRAPLEN)).append(" ").append(border[5]).append(" \n");
                     }
                 }
             }
         } else {
-            balloon += border[0] + " " + message + " " + border[1] + " \n";
+            balloon.append(border[0]).append(" ").append(message).append(" ").append(border[1]).append(" \n");
         }
         
-        balloon += " " + new String(new char[maxlen]).replace("\0", "-") + " \n";
-        return balloon;
+        balloon.append(" " + new String(new char[maxlen+2]).replace("\0", "-") + " \n");
+        return balloon.toString();
     }
 
     public void getCowFile(){
