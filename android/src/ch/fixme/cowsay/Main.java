@@ -109,6 +109,7 @@ public class Main extends Activity
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         messageView = (EditText) findViewById(R.id.message);
         messageView.setText("Moo");
+        messageView.setSelection(3);
 
         // Real time update
         TextWatcher myTextWatcher = new TextWatcher() {        	
