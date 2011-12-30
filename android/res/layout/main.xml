@@ -35,10 +35,7 @@
         android:layout_weight="1"
         android:textColor="#00ff00"
         android:typeface="monospace"
-        android:gravity="bottom"
-        android:singleLine="false"
-        android:scrollHorizontally="true"
-        android:scrollbars="vertical|horizontal" />
+        android:gravity="bottom" />
 
     <EditText
         android:id="@+id/message" 
