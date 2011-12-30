@@ -28,7 +28,7 @@
             android:prompt="@string/face_prompt" />
     </LinearLayout>
 
-    <TextView
+    <ch.fixme.cowsay.TextFitTextView
         android:id="@+id/thecow"
         android:layout_width="fill_parent"
         android:layout_height="0dip"

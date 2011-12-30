@@ -34,7 +34,7 @@ public class Main extends Activity
 {    
 	private Cow cow;
     private EditText messageView;
-    private TextView outputView;
+    private TextFitTextView outputView;
 	
     // Menu 
 	public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -105,7 +105,7 @@ public class Main extends Activity
         cow = new Cow(ctxt);
         populateCowTypes();
         populateCowFaces();
-        outputView = (TextView) findViewById(R.id.thecow);
+        outputView = (TextFitTextView) findViewById(R.id.thecow);
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         messageView = (EditText) findViewById(R.id.message);
         messageView.setText("Moo");
