@@ -47,6 +47,7 @@
         android:layout_height="wrap_content" 
         android:text=""
         android:maxLines="1"
+        android:singleLine="true"
         android:hint="Message" />
 
 </LinearLayout>
