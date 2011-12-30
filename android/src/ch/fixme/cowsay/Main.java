@@ -2,6 +2,7 @@ package ch.fixme.cowsay;
 
 import java.lang.Math;
 
+import android.text.method.ScrollingMovementMethod;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetricsInt;
 import android.util.TypedValue;
@@ -105,6 +106,7 @@ public class Main extends Activity
         populateCowTypes();
         populateCowFaces();
         outputView = (TextView) findViewById(R.id.thecow);
+        outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         messageView = (EditText) findViewById(R.id.message);
         messageView.setText("Moo");
 
