@@ -16,7 +16,7 @@ public class Cow
     public int face;
     public String style;
     public String thoughts;
-    public String message;
+    public String message = "Moo";
     
     private int think = 0;
     private String rawCow;
@@ -111,11 +111,15 @@ public class Cow
             balloon.append(border[0]).append(" ").append(message).append(" ").append(border[1]).append(" \n");
         }
         
-        balloon.append(" " + new String(new char[maxlen+2]).replace("\0", "-") + " \n");
+        balloon.append(" ").append(new String(new char[maxlen+2]).replace("\0", "-")).append(" \n");
         return balloon.toString();
     }
 
     public void getCowFile(){
+        if(style==null){
+            Log.e("getCowFile()", "FIXME: cow style is null");
+            return;
+        }
         try {
             InputStream is = mngr.open("cows/" + style + ".cow");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

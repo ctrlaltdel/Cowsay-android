@@ -108,13 +108,11 @@ public class Main extends Activity
         outputView = (TextView) findViewById(R.id.thecow);
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         messageView = (EditText) findViewById(R.id.message);
-        messageView.setText("Moo");
-        messageView.setSelection(3);
 
         // Real time update
         TextWatcher myTextWatcher = new TextWatcher() {        	
         	public void onTextChanged(CharSequence s, int start, int before, int count) {
-        		cowRefresh();
+                cowRefresh();
         	}
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -167,7 +165,10 @@ public class Main extends Activity
     }
     
     private void cowRefresh() {
-    	cow.message = messageView.getText().toString();
+        final String msg = messageView.getText().toString();
+        if(msg.length()>0){
+    	    cow.message = msg;
+        }
         outputView.setText(cow.getFinalCow());
     }
 }
