@@ -59,6 +59,7 @@ public class Main extends Activity
             	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
             	intent.putExtra(Intent.EXTRA_TEXT, cow.getFinalCow());
             	startActivity(Intent.createChooser(intent, "Share with"));
+            	break;
         
             case MENU_SHARE_HTML:
             	Log.d("Main Menu", "Share as HTML");
@@ -66,6 +67,7 @@ public class Main extends Activity
             	intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
             	intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.getFinalCow() + "</pre></html>");
             	startActivity(Intent.createChooser(intent, "Share with"));
+            	break;
             	
             case MENU_SHARE_IMAGE:
             	Log.d("Main Menu", "Share as image");
@@ -83,7 +85,7 @@ public class Main extends Activity
             	emailIntent.setType("image/png");
 
             	startActivity(Intent.createChooser(emailIntent, "Send email using"));
-
+            	break;
         }
 
         return false;
