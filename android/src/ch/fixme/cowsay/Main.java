@@ -1,13 +1,5 @@
 package ch.fixme.cowsay;
 
-import java.lang.Math;
-import android.text.Selection;
-import android.text.method.ScrollingMovementMethod;
-import android.graphics.Paint;
-import android.graphics.Paint.FontMetricsInt;
-import android.util.TypedValue;
-import android.view.WindowManager;
-import android.util.DisplayMetrics;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore.Images;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -128,7 +121,7 @@ public class Main extends Activity
         // Populate the cow type Spinner widget        
     	final String[] items = cow.getCowTypes();
         final Spinner spinner = (Spinner) findViewById(R.id.type);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
         spinner.setSelection(11);
@@ -148,7 +141,7 @@ public class Main extends Activity
     private void populateCowFaces() {
         // Populate the cow face Spinner widget        
         Spinner s = (Spinner) findViewById(R.id.face);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.faces, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.faces, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         s.setAdapter(adapter);
         s.setSelection(0);

@@ -1,15 +1,14 @@
 package ch.fixme.cowsay;
 
-import  java.lang.StringBuffer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import android.util.Log;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 public class Cow
 {
@@ -59,7 +58,7 @@ public class Cow
     }
 
     public String[] getCowTypes() { 
-    	ArrayList res = new ArrayList();
+    	ArrayList<String> res = new ArrayList<String>();
     	try {
 			String[] cows = context.getAssets().list("cows");
 			for (int i = 0; i < cows.length; i++) {

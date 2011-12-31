@@ -38,7 +38,7 @@ public class TextFitTextView extends TextView {
         int height = this.getHeight();
         int lines = this.getLineCount();
         Rect r = new Rect();
-        int y1 = this.getLineBounds(0, r);
+//        int y1 = this.getLineBounds(0, r);
         int y2 = this.getLineBounds(lines-1, r);
 
         float size = this.getTextSize();
