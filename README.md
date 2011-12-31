@@ -20,8 +20,8 @@ TODO
 LICENSE
 -------
 
-  cowsay is distributed under the same licensing terms as Perl: the
-  Artistic License or the GNU General Public License.
+    cowsay is distributed under the same licensing terms as Perl: the
+    Artistic License or the GNU General Public License.
 
 See LICENSE for completeness
 
