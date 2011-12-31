@@ -27,6 +27,7 @@ public class Main extends Activity {
     private Cow cow;
     private EditText messageView;
     private TextView outputView;
+    private static final String TAG = "Main";
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
@@ -47,7 +48,7 @@ public class Main extends Activity {
 
         switch (item.getItemId()) {
             case MENU_SHARE_TEXT:
-                Log.d("Main Menu", "Share as text");
+                Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
                 intent.putExtra(Intent.EXTRA_TEXT, cow.getFinalCow());
@@ -55,7 +56,7 @@ public class Main extends Activity {
                 break;
 
             case MENU_SHARE_HTML:
-                Log.d("Main Menu", "Share as HTML");
+                Log.d(TAG, "Share as HTML");
                 intent.setType("text/html");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
                 intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.getFinalCow()
@@ -64,7 +65,7 @@ public class Main extends Activity {
                 break;
 
             case MENU_SHARE_IMAGE:
-                Log.d("Main Menu", "Share as image");
+                Log.d(TAG, "Share as image");
 
                 View thecow = findViewById(R.id.thecow);
                 Bitmap screenshot = Bitmap.createBitmap(thecow.getWidth(), thecow.getHeight(),
