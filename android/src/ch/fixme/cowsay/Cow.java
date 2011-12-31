@@ -19,7 +19,7 @@ public class Cow
     public String message = "Moo";
     
     private int think = 0;
-    private String rawCow;
+    private String rawCow = "";
     private String eyes;
     private String tongue;
     
