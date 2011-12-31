@@ -32,6 +32,7 @@ public class Cow {
     public static final int FACE_YOUNG = 8;
 
     private final int WRAPLEN = 30;
+    private static final String TAG = "Cow";
 
     final Context context;
     final AssetManager mngr;
@@ -117,7 +118,7 @@ public class Cow {
 
     public void getCowFile() {
         if (style == null) {
-            Log.e("getCowFile()", "FIXME: cow style is null");
+            Log.e(TAG, "FIXME: cow style is null");
             return;
         }
         try {
@@ -128,7 +129,7 @@ public class Cow {
             // Jump to cow start
             while (true) {
                 line = br.readLine();
-                Log.d("Cow", "Line: " + line);
+                Log.d(TAG, "Line: " + line);
                 if (line == null) {
                     rawCow = "Cow parsing failure";
                 }
@@ -138,11 +139,11 @@ public class Cow {
                 }
                 ;
             }
-            Log.d("Cow", "Got the cow!");
+            Log.d(TAG, "Got the cow!");
             while ((line = br.readLine()) != null) {
-                Log.d("Cow", "Line: " + line);
+                Log.d(TAG, "Line: " + line);
                 if ((line.contains("EOC") || line.contains("EOF"))) {
-                    Log.d("Cow", "End of cow found");
+                    Log.d(TAG, "End of cow found");
                     break;
                 }
                 sb.append(line + "\n");
