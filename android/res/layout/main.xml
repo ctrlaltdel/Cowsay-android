@@ -28,19 +28,23 @@
             android:prompt="@string/face_prompt" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/thecow"
+    <ch.fixme.cowsay.WScrollView
+        android:id="@+id/wsv"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:layout_margin="5dip"
-        android:textColor="#00ff00"
-        android:typeface="monospace"
-        android:gravity="bottom"
-        android:singleLine="false"
-        android:scrollHorizontally="true"
-        android:scrollbars="vertical|horizontal" />
-
+        android:fillViewport="true">
+            <TextView
+                android:id="@+id/thecow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#00ff00"
+                android:typeface="monospace"
+                android:layout_gravity="bottom"
+                android:singleLine="false"
+                android:scrollbars="vertical" />
+    </ch.fixme.cowsay.WScrollView>
+    
     <EditText
         android:id="@+id/message" 
         android:layout_width="fill_parent" 

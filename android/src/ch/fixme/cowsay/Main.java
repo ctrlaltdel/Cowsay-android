@@ -34,6 +34,42 @@ public class Main extends Activity {
     public static final int MENU_SHARE_HTML = Menu.FIRST + 1;
     public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.main);
+
+        // Initialize objects and ui access
+        final Context ctxt = getApplicationContext();
+        cow = new Cow(ctxt);
+        populateCowTypes();
+        populateCowFaces();
+        outputView = (TextView) findViewById(R.id.thecow);
+        messageView = (EditText) findViewById(R.id.message);
+
+        // Bidirectionnal scrollview
+        outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
+        WScrollView hsv = (WScrollView) findViewById(R.id.wsv);
+        hsv.sv = outputView;
+
+        // Real time update
+        TextWatcher myTextWatcher = new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                cowRefresh();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+        messageView.addTextChangedListener(myTextWatcher);
+    }
+
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_SHARE_TEXT, 0, "Share as text");
@@ -86,38 +122,6 @@ public class Main extends Activity {
         }
 
         return false;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.main);
-
-        // Initialize objects and ui access
-        final Context ctxt = getApplicationContext();
-        cow = new Cow(ctxt);
-        populateCowTypes();
-        populateCowFaces();
-        outputView = (TextView) findViewById(R.id.thecow);
-        outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
-        messageView = (EditText) findViewById(R.id.message);
-
-        // Real time update
-        TextWatcher myTextWatcher = new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                cowRefresh();
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        };
-        messageView.addTextChangedListener(myTextWatcher);
     }
 
     private void populateCowTypes() {
