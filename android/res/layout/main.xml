@@ -25,6 +25,12 @@
             android:layout_height="wrap_content"
             android:drawSelectorOnTop="true"
             android:prompt="@string/face_prompt" />
+        <ToggleButton android:id="@+id/think_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textOn="@string/think_on"
+            android:textOff="@string/think_off"/>
     </LinearLayout>
 
     <ch.fixme.cowsay.WScrollView
@@ -53,7 +59,7 @@
         android:text=""
         android:maxLines="1"
         android:singleLine="true"
-        android:hint="Message"
+        android:hint="@string/message_hint"
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:layout_marginBottom="5dip" />

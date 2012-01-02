@@ -13,7 +13,7 @@ import android.util.Log;
 public class Cow {
     public String style;
     public String message = "Moo";
-    private int think = 0;
+    public int think = 0;
     private String rawCow = "";
 
     public static final int FACE_DEFAULT = 0;
@@ -38,8 +38,9 @@ public class Cow {
     private static final String TAG = "Cow";
     public static final String CR = "\r\n";
 
-    final Context context;
-    final AssetManager mngr;
+    private final Context context;
+    private final AssetManager mngr;
+    public int face = FACE_DEFAULT;
 
     public Cow(Context context) {
         this.context = context;
@@ -158,6 +159,7 @@ public class Cow {
     }
 
     public void constructFace(int face) {
+        this.face = face;
         final String thoughts;
         if (think == 1) {
             thoughts = "o";

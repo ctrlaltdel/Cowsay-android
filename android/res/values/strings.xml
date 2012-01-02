@@ -6,6 +6,9 @@
     <string name="btn_close">Close</string>
     <string name="menu_share_text">Share as text</string>
     <string name="share_chooser">Share with</string>
+    <string name="message_hint">Message</string>
+    <string name="think_on">Think</string>
+    <string name="think_off">Say</string>
     <string name="error_parse">Cow parsing failure</string>
     <string name="error_crash">No cow available due to some parser crash, too bad!</string>
     <string name="about_title">About</string>
