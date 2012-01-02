@@ -135,13 +135,11 @@ public class Cow {
                 line = br.readLine();
                 Log.d(TAG, "Line: " + line);
                 if (line == null) {
-                    rawCow = "Cow parsing failure";
+                    rawCow = context.getString(R.string.error_parse);
                 }
-                ;
                 if (line.contains("$the_cow =")) {
                     break;
                 }
-                ;
             }
             Log.d(TAG, "Got the cow!");
             while ((line = br.readLine()) != null) {
@@ -155,7 +153,7 @@ public class Cow {
             rawCow = sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            rawCow = "No cow available due to some parser crash, too bad!";
+            rawCow = context.getString(R.string.error_crash);
         }
     }
 
