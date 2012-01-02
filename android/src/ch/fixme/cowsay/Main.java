@@ -109,7 +109,7 @@ public class Main extends Activity {
                 Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
-                intent.putExtra(Intent.EXTRA_TEXT, Cow.CR + cow.getFinalCow());
+                intent.putExtra(Intent.EXTRA_TEXT, Cow.LF + cow.getFinalCow());
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
                 break;
             case MENU_COPY:

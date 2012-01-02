@@ -36,7 +36,7 @@ public class Cow {
 
     private final int WRAPLEN = 30; // TODO: This should not be fixed here?
     private static final String TAG = "Cow";
-    public static final String CR = "\r\n";
+    public static final String LF = "\n";
 
     private final Context context;
     private final AssetManager mngr;
@@ -73,7 +73,7 @@ public class Cow {
     }
 
     private String getBalloon() {
-        message = message.replace("\n", ""); // TODO: handle multiline input
+        message = message.replace(LF, ""); // TODO: handle multiline input
         int msglen = message.length();
         int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen;
         // Balloon borders
@@ -89,13 +89,13 @@ public class Cow {
         // Draw balloon content
         StringBuffer balloon = new StringBuffer();
         // TODO: append(char[] chars, int start, int length)
-        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "_")).append(CR);
+        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "_")).append(LF);
         if (msglen > WRAPLEN) {
             for (int i = 0; i < msglen; i += WRAPLEN) {
                 // First line
                 if (i < WRAPLEN) {
                     balloon.append(border[0]).append(" ").append(message.substring(0, WRAPLEN))
-                            .append(" ").append(border[1]).append(CR);
+                            .append(" ").append(border[1]).append(LF);
                 } else {
                     // Last line
                     int sublen = message.substring(i, msglen - 1).length();
@@ -103,21 +103,21 @@ public class Cow {
                         int padlen = WRAPLEN - sublen;
                         String padding = new String(new char[padlen]).replace("\0", " ");
                         balloon.append(border[2]).append(" ").append(message.substring(i, msglen))
-                                .append(padding).append(border[3]).append(CR);
+                                .append(padding).append(border[3]).append(LF);
                         // Middle line
                     } else {
                         balloon.append(border[4]).append(" ")
                                 .append(message.substring(i, i + WRAPLEN)).append(" ")
-                                .append(border[5]).append(CR);
+                                .append(border[5]).append(LF);
                     }
                 }
             }
         } else {
             balloon.append(border[0]).append(" ").append(message).append(" ").append(border[1])
-                    .append(CR);
+                    .append(LF);
         }
 
-        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "-")).append(CR);
+        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "-")).append(LF);
         return balloon.toString();
     }
 
@@ -149,7 +149,7 @@ public class Cow {
                     Log.d(TAG, "End of cow found");
                     break;
                 }
-                sb.append(line).append(CR);
+                sb.append(line).append(LF);
             }
             rawCow = sb.toString();
         } catch (IOException e) {
