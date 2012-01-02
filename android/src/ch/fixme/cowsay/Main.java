@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main extends Activity {
     private Cow cow;
@@ -32,7 +34,8 @@ public class Main extends Activity {
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
-    public static final int MENU_ABOUT = Menu.FIRST + 1;
+    public static final int MENU_COPY = Menu.FIRST + 1;
+    public static final int MENU_ABOUT = Menu.FIRST + 2;
 
     // public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
 
@@ -89,6 +92,7 @@ public class Main extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_SHARE_TEXT, 0, R.string.menu_share_text).setIcon(
                 android.R.drawable.ic_menu_share);
+        menu.add(0, MENU_COPY, 0, R.string.menu_copy).setIcon(android.R.drawable.ic_menu_save);
         menu.add(0, MENU_ABOUT, 0, R.string.about_title).setIcon(
                 android.R.drawable.ic_menu_info_details);
         // menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
@@ -100,12 +104,17 @@ public class Main extends Activity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         switch (item.getItemId()) {
             case MENU_SHARE_TEXT:
-             // TODO: Doesn't work on facebook (it needs a link only to be shared)
+                // TODO: Doesn't work on facebook
+                // http://bugs.developers.facebook.net/show_bug.cgi?id=16728
                 Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
                 intent.putExtra(Intent.EXTRA_TEXT, Cow.CR + cow.getFinalCow());
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
+                break;
+            case MENU_COPY:
+                ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).setText(cow.getFinalCow());
+                Toast.makeText(this, R.string.toast_copy, Toast.LENGTH_SHORT).show();
                 break;
             case MENU_ABOUT:
                 showDialog(MENU_ABOUT);
