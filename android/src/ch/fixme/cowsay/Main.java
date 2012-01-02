@@ -1,11 +1,15 @@
 package ch.fixme.cowsay;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +30,9 @@ public class Main extends Activity {
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
+    public static final int MENU_ABOUT = Menu.FIRST + 1;
 
-    // public static final int MENU_SHARE_IMAGE = Menu.FIRST + 1;
+    // public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class Main extends Activity {
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_SHARE_TEXT, 0, "Share as text").setIcon(android.R.drawable.ic_menu_share);
+        menu.add(0, MENU_ABOUT, 0, "About").setIcon(android.R.drawable.ic_menu_info_details);
         // menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
         return true;
     }
@@ -80,6 +86,9 @@ public class Main extends Activity {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
                 intent.putExtra(Intent.EXTRA_TEXT, Cow.CR + cow.getFinalCow());
                 startActivity(Intent.createChooser(intent, "Share with"));
+                break;
+            case MENU_ABOUT:
+                showDialog(MENU_ABOUT);
                 break;
             // case MENU_SHARE_IMAGE:
             // Log.d(TAG, "Share as image");
@@ -104,6 +113,22 @@ public class Main extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return false;
+    }
+
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog = null;
+        switch (id) {
+            case MENU_ABOUT:
+                // TODO: Make the link clickable with setMovementMethod()
+                final SpannableString msg = new SpannableString(getString(R.string.about_message));
+                Linkify.addLinks(msg, Linkify.WEB_URLS);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.about_title).setMessage(msg)
+                        .setNeutralButton(R.string.btn_close, null);
+                dialog = builder.create();
+                break;
+        }
+        return dialog;
     }
 
     private void populateCowTypes() {

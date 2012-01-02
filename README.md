@@ -1,7 +1,7 @@
 Cowsay for Android
 ==================
 
-Port of the original command line application "cowsay" for the Android mobile platform. This little application was made by the FIXME.CH hackerspace member during the 28C3 in Berlin.
+Port of the original command line application "cowsay" for the Android mobile platform. This little application was made by some FIXME.CH hackerspace members during the 28C3 in Berlin.
 
 FEATURES
 --------
@@ -9,11 +9,12 @@ FEATURES
 - Custom message
 - Multiple cows (additionnal Droid "cow")
 - Multiple faces
-- Share as ASCII, HTML and PNG
+- Share as ASCII
 
 TODO
 ----
 
+- Share as HTML/PNG
 - Automatic resize of the text
 - CLI binding (using JNI) with stdin support
 
