@@ -11,15 +11,10 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 public class Cow {
-    public int face;
     public String style;
-    public String thoughts;
     public String message = "Moo";
-
     private int think = 0;
     private String rawCow = "";
-    private String eyes;
-    private String tongue;
 
     public static final int FACE_DEFAULT = 0;
     public static final int FACE_BORG = 1;
@@ -35,7 +30,11 @@ public class Cow {
     private static final char[] border2 = new char[] { '/', '\\', '\\', '/', '|', '|' };
     private static final char[] border3 = new char[] { '<', '>' };
 
-    private final int WRAPLEN = 30;
+    private static final String[] token_src = new String[] { "$eyes", "${eyes}", "$tongue",
+            "${tongue}", "$thoughts", "${thoughts}", "\\@", "\\\\" };
+    private String[] token_dst;
+
+    private final int WRAPLEN = 30; // TODO: This should not be fixed here?
     private static final String TAG = "Cow";
     public static final String CR = "\r\n";
 
@@ -46,14 +45,15 @@ public class Cow {
         this.context = context;
         this.mngr = context.getAssets();
         getCowFile();
+        constructFace(FACE_DEFAULT);
     }
 
     public String getFinalCow() {
-        construct_face();
-        String newCow = new String(rawCow).replace("$eyes", eyes).replace("${eyes}", eyes)
-                .replace("$tongue", tongue).replace("${tongue}", tongue)
-                .replace("$thoughts", thoughts).replace("${thoughts}", thoughts)
-                .replace("\\@", "@").replace("\\\\", "\\");
+        // TODO: Use a StringBuffer or TextUtils.replace() ?
+        String newCow = new String(rawCow);
+        for (int i = 0; i < token_src.length; i++) {
+            newCow = newCow.replace(token_src[i], token_dst[i]);
+        }
         return getBalloon() + newCow;
     }
 
@@ -122,7 +122,7 @@ public class Cow {
 
     public void getCowFile() {
         if (style == null) {
-            Log.e(TAG, "FIXME: cow style is null");
+            Log.e(TAG, "FIXME: cow style is null"); // FIXME
             return;
         }
         try {
@@ -159,14 +159,15 @@ public class Cow {
         }
     }
 
-    private void construct_face() {
+    public void constructFace(int face) {
+        final String thoughts;
         if (think == 1) {
             thoughts = "o";
         } else {
             thoughts = "\\";
         }
-        eyes = "oo";
-        tongue = "  ";
+        String eyes = "oo";
+        String tongue = "  ";
         switch (face) {
             case FACE_BORG:
                 eyes = "==";
@@ -198,5 +199,6 @@ public class Cow {
                 tongue = "  ";
                 break;
         }
+        token_dst = new String[] { eyes, eyes, tongue, tongue, thoughts, thoughts, "@", "\\" };
     }
 }

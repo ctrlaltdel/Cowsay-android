@@ -70,8 +70,10 @@ public class Main extends Activity {
 
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_SHARE_TEXT, 0, "Share as text").setIcon(android.R.drawable.ic_menu_share);
-        menu.add(0, MENU_ABOUT, 0, "About").setIcon(android.R.drawable.ic_menu_info_details);
+        menu.add(0, MENU_SHARE_TEXT, 0, R.string.menu_share_text).setIcon(
+                android.R.drawable.ic_menu_share);
+        menu.add(0, MENU_ABOUT, 0, R.string.about_title).setIcon(
+                android.R.drawable.ic_menu_info_details);
         // menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
         return true;
     }
@@ -83,9 +85,9 @@ public class Main extends Activity {
             case MENU_SHARE_TEXT:
                 Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
+                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
                 intent.putExtra(Intent.EXTRA_TEXT, Cow.CR + cow.getFinalCow());
-                startActivity(Intent.createChooser(intent, "Share with"));
+                startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
                 break;
             case MENU_ABOUT:
                 showDialog(MENU_ABOUT);
@@ -165,7 +167,7 @@ public class Main extends Activity {
         s.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
-                cow.face = position;
+                cow.constructFace(position);
                 cowRefresh();
             }
 
@@ -175,8 +177,8 @@ public class Main extends Activity {
         });
     }
 
-    private void cowRefresh() { // FIXME: find a fix so it's not fired 2 times
-                                // when launching the app...
+    // FIXME: find a fix so it's not fired 2 times when launching the app...
+    private void cowRefresh() {
         final String msg = messageView.getText().toString();
         if (msg.length() > 0) {
             cow.message = msg;

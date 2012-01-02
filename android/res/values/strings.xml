@@ -4,6 +4,8 @@
     <string name="type_prompt">Select a Cow :</string>
     <string name="face_prompt">Select a face :</string>
     <string name="btn_close">Close</string>
+    <string name="menu_share_text">Share as text</string>
+    <string name="share_chooser">Share with</string>
     <string name="about_title">About</string>
     <string name="about_message">Port of the original command line application "cowsay" for the Android mobile platform.
         This little application was made by some FIXME.CH hackerspace members during the 28C3 in Berlin.\n\n
