@@ -9,7 +9,9 @@ FEATURES
 - Custom message
 - Multiple cows (additionnal Droid "cow")
 - Multiple faces
+- Say/Think
 - Share as ASCII
+- Copy to clipboard
 
 TODO
 ----
