@@ -100,6 +100,7 @@ public class Main extends Activity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         switch (item.getItemId()) {
             case MENU_SHARE_TEXT:
+             // TODO: Doesn't work on facebook (it needs a link only to be shared)
                 Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
