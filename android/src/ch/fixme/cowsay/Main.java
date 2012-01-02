@@ -1,13 +1,8 @@
 package ch.fixme.cowsay;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore.Images;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
@@ -31,8 +26,8 @@ public class Main extends Activity {
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
-    public static final int MENU_SHARE_HTML = Menu.FIRST + 1;
-    public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
+
+    // public static final int MENU_SHARE_IMAGE = Menu.FIRST + 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,17 +36,15 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         // Initialize objects and ui access
-        final Context ctxt = getApplicationContext();
-        cow = new Cow(ctxt);
-        populateCowTypes();
-        populateCowFaces();
+        cow = new Cow(getApplicationContext());
         outputView = (TextView) findViewById(R.id.thecow);
         messageView = (EditText) findViewById(R.id.message);
+        populateCowTypes();
+        populateCowFaces();
 
         // Bidirectionnal scrollview
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
-        WScrollView hsv = (WScrollView) findViewById(R.id.wsv);
-        hsv.sv = outputView;
+        ((WScrollView) findViewById(R.id.wsv)).sv = outputView;
 
         // Real time update
         TextWatcher myTextWatcher = new TextWatcher() {
@@ -72,55 +65,44 @@ public class Main extends Activity {
 
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_SHARE_TEXT, 0, "Share as text");
-        menu.add(0, MENU_SHARE_HTML, 0, "Share as HTML");
-        menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
+        menu.add(0, MENU_SHARE_TEXT, 0, "Share as text").setIcon(android.R.drawable.ic_menu_share);
+        // menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
         return true;
     }
 
     /* Handles item selections */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-
         switch (item.getItemId()) {
             case MENU_SHARE_TEXT:
                 Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
-                intent.putExtra(Intent.EXTRA_TEXT, cow.getFinalCow());
+                intent.putExtra(Intent.EXTRA_TEXT, Cow.CR + cow.getFinalCow());
                 startActivity(Intent.createChooser(intent, "Share with"));
                 break;
-
-            case MENU_SHARE_HTML:
-                Log.d(TAG, "Share as HTML");
-                intent.setType("text/html");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Cowsay");
-                intent.putExtra(Intent.EXTRA_TEXT, "<html><pre>" + cow.getFinalCow()
-                        + "</pre></html>");
-                startActivity(Intent.createChooser(intent, "Share with"));
-                break;
-
-            case MENU_SHARE_IMAGE:
-                Log.d(TAG, "Share as image");
-
-                View thecow = findViewById(R.id.thecow);
-                Bitmap screenshot = Bitmap.createBitmap(thecow.getWidth(), thecow.getHeight(),
-                        Bitmap.Config.RGB_565);
-                thecow.draw(new Canvas(screenshot));
-
-                String path = Images.Media.insertImage(getContentResolver(), screenshot, "title",
-                        null);
-                Uri screenshotUri = Uri.parse(path);
-
-                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                emailIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-                emailIntent.setType("image/png");
-
-                startActivity(Intent.createChooser(emailIntent, "Send email using"));
-                break;
+            // case MENU_SHARE_IMAGE:
+            // Log.d(TAG, "Share as image");
+            // View thecow = findViewById(R.id.thecow);
+            // Bitmap screenshot = Bitmap.createBitmap(thecow.getWidth(),
+            // thecow.getHeight(),
+            // Bitmap.Config.ARGB_8888);
+            // thecow.draw(new Canvas(screenshot));
+            // String path = Images.Media.insertImage(getContentResolver(),
+            // screenshot, "title",
+            // null);
+            // Uri screenshotUri = Uri.parse(path);
+            // final Intent emailIntent = new
+            // Intent(android.content.Intent.ACTION_SEND);
+            // emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // emailIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+            // emailIntent.setType("image/png");
+            // startActivity(Intent.createChooser(emailIntent,
+            // "Send email using"));
+            // break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
         return false;
     }
 

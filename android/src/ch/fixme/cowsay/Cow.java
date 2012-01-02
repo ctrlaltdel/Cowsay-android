@@ -33,6 +33,7 @@ public class Cow {
 
     private final int WRAPLEN = 30;
     private static final String TAG = "Cow";
+    public static final String CR = "\r\n";
 
     final Context context;
     final AssetManager mngr;
@@ -82,14 +83,14 @@ public class Cow {
         }
         // Draw balloon content
         StringBuffer balloon = new StringBuffer();
-        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "_"))
-                .append(" \n"); // append(char[] chars, int start, int length)
+        // TODO: append(char[] chars, int start, int length)
+        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "_")).append(CR);
         if (msglen > WRAPLEN) {
             for (int i = 0; i < msglen; i += WRAPLEN) {
                 // First line
                 if (i < WRAPLEN) {
                     balloon.append(border[0]).append(" ").append(message.substring(0, WRAPLEN))
-                            .append(" ").append(border[1]).append(" \n");
+                            .append(" ").append(border[1]).append(CR);
                 } else {
                     // Last line
                     int sublen = message.substring(i, msglen - 1).length();
@@ -97,22 +98,21 @@ public class Cow {
                         int padlen = WRAPLEN - sublen;
                         String padding = new String(new char[padlen]).replace("\0", " ");
                         balloon.append(border[2]).append(" ").append(message.substring(i, msglen))
-                                .append(padding).append(border[3]).append(" \n");
+                                .append(padding).append(border[3]).append(CR);
                         // Middle line
                     } else {
                         balloon.append(border[4]).append(" ")
                                 .append(message.substring(i, i + WRAPLEN)).append(" ")
-                                .append(border[5]).append(" \n");
+                                .append(border[5]).append(CR);
                     }
                 }
             }
         } else {
             balloon.append(border[0]).append(" ").append(message).append(" ").append(border[1])
-                    .append(" \n");
+                    .append(CR);
         }
 
-        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "-"))
-                .append(" \n");
+        balloon.append(" ").append(new String(new char[maxlen + 2]).replace("\0", "-")).append(CR);
         return balloon.toString();
     }
 
@@ -146,7 +146,7 @@ public class Cow {
                     Log.d(TAG, "End of cow found");
                     break;
                 }
-                sb.append(line + "\n");
+                sb.append(line).append(CR);
             }
             rawCow = sb.toString();
         } catch (IOException e) {
