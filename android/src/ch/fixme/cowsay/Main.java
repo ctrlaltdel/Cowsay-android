@@ -68,6 +68,7 @@ public class Main extends Activity {
         populateCowFaces();
 
         // Bidirectionnal scrollview
+        // FIXME: Vertical scrolling doesn't work on 1.6 but works on 1.5
         outputView.setMovementMethod(ScrollingMovementMethod.getInstance());
         ((WScrollView) findViewById(R.id.wsv)).sv = outputView;
 
