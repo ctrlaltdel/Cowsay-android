@@ -17,20 +17,16 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawSelectorOnTop="true"
             android:prompt="@string/type_prompt" />
         <Spinner
             android:id="@+id/face"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
             android:prompt="@string/face_prompt" />
-        <ToggleButton android:id="@+id/think_toggle"
-            android:layout_width="wrap_content"
+        <Button android:id="@+id/think_toggle"
+            android:layout_width="60dip"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textOn="@string/think_on"
-            android:textOff="@string/think_off"/>
+            android:text="@string/think_off"/>
     </LinearLayout>
 
     <ch.fixme.cowsay.WScrollView

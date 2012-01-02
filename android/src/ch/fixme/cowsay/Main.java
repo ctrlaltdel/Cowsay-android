@@ -19,10 +19,10 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 public class Main extends Activity {
     private Cow cow;
@@ -43,17 +43,16 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         // Think button
-        final ToggleButton togglebutton = (ToggleButton) findViewById(R.id.think_toggle);
+        final Button togglebutton = (Button) findViewById(R.id.think_toggle);
         togglebutton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                if (togglebutton.isChecked()) {
-                    cow.think = 1;
-                    cow.constructFace(cow.face);
-                    cowRefresh();
+                cow.think = (cow.think == 1) ? 0 : 1;
+                cow.constructFace(cow.face);
+                cowRefresh();
+                if (cow.think == 1) {
+                    togglebutton.setText(R.string.think_on);
                 } else {
-                    cow.think = 0;
-                    cow.constructFace(cow.face);
-                    cowRefresh();
+                    togglebutton.setText(R.string.think_off);
                 }
             }
         });
