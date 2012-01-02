@@ -31,6 +31,10 @@ public class Cow {
     public static final int FACE_WIRED = 7;
     public static final int FACE_YOUNG = 8;
 
+    private static final char[] border1 = new char[] { '(', ')', '(', ')', '(', ')' };
+    private static final char[] border2 = new char[] { '/', '\\', '\\', '/', '|', '|' };
+    private static final char[] border3 = new char[] { '<', '>' };
+
     private final int WRAPLEN = 30;
     private static final String TAG = "Cow";
     public static final String CR = "\r\n";
@@ -75,11 +79,11 @@ public class Cow {
         // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if (think == 1) {
-            border = new char[] { '(', ')', '(', ')', '(', ')' };
+            border = border1;
         } else if (msglen > WRAPLEN) {
-            border = new char[] { '/', '\\', '\\', '/', '|', '|' };
+            border = border2;
         } else {
-            border = new char[] { '<', '>' };
+            border = border3;
         }
         // Draw balloon content
         StringBuffer balloon = new StringBuffer();
