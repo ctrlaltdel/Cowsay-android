@@ -5,6 +5,7 @@
     <string name="face_prompt">Select a face :</string>
     <string name="btn_close">Close</string>
     <string name="menu_share_text">Share as text</string>
+    <string name="menu_share_image">Share as image</string>
     <string name="menu_copy">Copy to clipboard</string>
     <string name="share_chooser">Share with</string>
     <string name="message_hint">Message</string>

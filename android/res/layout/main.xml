@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#00ff00"
+                android:background="#000000"
                 android:typeface="monospace"
                 android:layout_gravity="bottom"
                 android:singleLine="false"

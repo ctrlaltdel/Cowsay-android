@@ -1,9 +1,17 @@
 package ch.fixme.cowsay;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.Editable;
@@ -11,7 +19,6 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,14 +37,14 @@ public class Main extends Activity {
     private Cow cow;
     private EditText messageView;
     private TextView outputView;
-    private static final String TAG = "Main";
+    // private static final String TAG = "Main";
+    private static final String SHARE_PNG = "share.png";
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
     public static final int MENU_COPY = Menu.FIRST + 1;
     public static final int MENU_ABOUT = Menu.FIRST + 2;
-
-    // public static final int MENU_SHARE_IMAGE = Menu.FIRST + 2;
+    public static final int MENU_SHARE_IMAGE = Menu.FIRST + 3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,10 +100,11 @@ public class Main extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_SHARE_TEXT, 0, R.string.menu_share_text).setIcon(
                 android.R.drawable.ic_menu_share);
+        menu.add(0, MENU_SHARE_IMAGE, 0, R.string.menu_share_image).setIcon(
+                android.R.drawable.ic_menu_share);
         menu.add(0, MENU_COPY, 0, R.string.menu_copy).setIcon(android.R.drawable.ic_menu_save);
         menu.add(0, MENU_ABOUT, 0, R.string.about_title).setIcon(
                 android.R.drawable.ic_menu_info_details);
-        // menu.add(0, MENU_SHARE_IMAGE, 0, "Share as image");
         return true;
     }
 
@@ -107,7 +115,6 @@ public class Main extends Activity {
             case MENU_SHARE_TEXT:
                 // TODO: Doesn't work on facebook
                 // http://bugs.developers.facebook.net/show_bug.cgi?id=16728
-                Log.d(TAG, "Share as text");
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
                 intent.putExtra(Intent.EXTRA_TEXT, Cow.LF + cow.getFinalCow());
@@ -120,25 +127,9 @@ public class Main extends Activity {
             case MENU_ABOUT:
                 showDialog(MENU_ABOUT);
                 break;
-            // case MENU_SHARE_IMAGE:
-            // Log.d(TAG, "Share as image");
-            // View thecow = findViewById(R.id.thecow);
-            // Bitmap screenshot = Bitmap.createBitmap(thecow.getWidth(),
-            // thecow.getHeight(),
-            // Bitmap.Config.ARGB_8888);
-            // thecow.draw(new Canvas(screenshot));
-            // String path = Images.Media.insertImage(getContentResolver(),
-            // screenshot, "title",
-            // null);
-            // Uri screenshotUri = Uri.parse(path);
-            // final Intent emailIntent = new
-            // Intent(android.content.Intent.ACTION_SEND);
-            // emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            // emailIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-            // emailIntent.setType("image/png");
-            // startActivity(Intent.createChooser(emailIntent,
-            // "Send email using"));
-            // break;
+            case MENU_SHARE_IMAGE:
+                new ShareImage().execute();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -212,5 +203,51 @@ public class Main extends Activity {
             cow.message = msg;
         }
         outputView.setText(cow.getFinalCow());
+    }
+
+    private class ShareImage extends AsyncTask<Void, Void, Boolean> {
+
+        private int width;
+        private int height;
+
+        @Override
+        protected void onPreExecute() {
+            // Get Bitmap from View (Yay for real height!)
+            width = outputView.getWidth();
+            height = outputView.getLineHeight() * outputView.getLineCount();
+            outputView.layout(0, 0, width, height);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // Create image
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            outputView.draw(c);
+
+            // Save image
+            try {
+                FileOutputStream os = openFileOutput(SHARE_PNG, Context.MODE_WORLD_READABLE);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+                return true;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (result) {
+                // Send image intent
+                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("image/png");
+                emailIntent.putExtra(Intent.EXTRA_STREAM,
+                        Uri.parse("file:///data/data/" + getPackageName() + "/files/" + SHARE_PNG));
+                startActivity(Intent.createChooser(emailIntent, "Send email using"));
+            }
+        }
+
     }
 }
