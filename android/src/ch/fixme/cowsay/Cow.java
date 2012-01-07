@@ -26,6 +26,7 @@ public class Cow {
     public static final int FACE_WIRED = 7;
     public static final int FACE_YOUNG = 8;
 
+    // Borders: up-left, up-right, down-left, down-right, left, right
     private static final char[] border1 = new char[] { '(', ')', '(', ')', '(', ')' };
     private static final char[] border2 = new char[] { '/', '\\', '\\', '/', '|', '|' };
     private static final char[] border3 = new char[] { '<', '>' };
@@ -73,11 +74,39 @@ public class Cow {
     }
 
     private String getBalloon() {
-        message = message.replace(LF, ""); // TODO: handle multiline input
         int msglen = message.length();
         int maxlen = (msglen > WRAPLEN) ? WRAPLEN : msglen;
+        // Replace LF by spaces
+        if (message.contains(LF)) {
+            // int sublen;
+            int rfpos;
+            StringBuffer sb = new StringBuffer();
+            String part = "";
+            for (int i = 0; i < msglen;) {
+                // Get the next line
+                if (i + WRAPLEN < msglen) {
+                    part = message.substring(i, i + WRAPLEN);
+                } else {
+                    part = message.substring(i, msglen);
+                }
+                if (part.contains(LF)) {
+                    // Remove the first LF and replace by spaces
+                    rfpos = part.indexOf(LF);
+                    part = part.substring(0, rfpos);
+                    sb.append(part).append(
+                            new String(new char[WRAPLEN - part.length()]).replace("\0", " "));
+                    // Restart after the line break
+                    i += rfpos + 1;
+                } else {
+                    sb.append(part);
+                    i += part.length();
+                }
+            }
+            message = sb.toString();
+            msglen = message.length();
+            maxlen = WRAPLEN;
+        }
         // Balloon borders
-        // up-left, up-right, down-left, down-right, left, right
         final char[] border;
         if (think == 1) {
             border = border1;
