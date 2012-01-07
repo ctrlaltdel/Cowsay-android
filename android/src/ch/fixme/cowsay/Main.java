@@ -35,7 +35,6 @@ public class Main extends Activity {
     private EditText messageView;
     private TextView outputView;
     // private static final String TAG = "Main";
-    private static final String SHARE_PNG = "share.png";
 
     // Menu
     public static final int MENU_SHARE_TEXT = Menu.FIRST;
