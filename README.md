@@ -10,13 +10,12 @@ FEATURES
 - Multiple cows (additionnal Droid "cow")
 - Multiple faces
 - Say/Think
-- Share as ASCII
+- Share as ASCII or Image
 - Copy to clipboard
 
 TODO
 ----
 
-- Share as HTML/PNG
 - Automatic resize of the text
 - CLI binding (using JNI) with stdin support
 
