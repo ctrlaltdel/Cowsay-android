@@ -1,18 +1,15 @@
 package ch.fixme.cowsay;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore.Images;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -207,6 +204,7 @@ public class Main extends Activity {
 
     private class ShareImage extends AsyncTask<Void, Void, Boolean> {
 
+        private String path;
         private int width;
         private int height;
 
@@ -224,16 +222,10 @@ public class Main extends Activity {
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bitmap);
             outputView.draw(c);
-
             // Save image
-            try {
-                FileOutputStream os = openFileOutput(SHARE_PNG, Context.MODE_WORLD_READABLE);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
-                return true;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
+            path = Images.Media.insertImage(getContentResolver(), bitmap,
+                    getString(R.string.app_name), null);
+            return true;
         }
 
         @Override
@@ -243,9 +235,8 @@ public class Main extends Activity {
                 // Send image intent
                 final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("image/png");
-                emailIntent.putExtra(Intent.EXTRA_STREAM,
-                        Uri.parse("file:///data/data/" + getPackageName() + "/files/" + SHARE_PNG));
-                startActivity(Intent.createChooser(emailIntent, "Send email using"));
+                emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
+                startActivity(Intent.createChooser(emailIntent, getString(R.string.share_chooser)));
             }
         }
 
