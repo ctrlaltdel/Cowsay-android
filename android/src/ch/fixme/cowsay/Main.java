@@ -18,6 +18,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -36,16 +37,9 @@ public class Main extends Activity {
     private TextView outputView;
     // private static final String TAG = "Main";
 
-    // Menu
-    public static final int MENU_SHARE_TEXT = Menu.FIRST;
-    public static final int MENU_COPY = Menu.FIRST + 1;
-    public static final int MENU_ABOUT = Menu.FIRST + 2;
-    public static final int MENU_SHARE_IMAGE = Menu.FIRST + 3;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
 
         // Think button
@@ -94,21 +88,16 @@ public class Main extends Activity {
 
     /* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, MENU_SHARE_TEXT, 0, R.string.menu_share_text).setIcon(
-                android.R.drawable.ic_menu_share);
-        menu.add(0, MENU_SHARE_IMAGE, 0, R.string.menu_share_image).setIcon(
-                android.R.drawable.ic_menu_share);
-        menu.add(0, MENU_COPY, 0, R.string.menu_copy).setIcon(android.R.drawable.ic_menu_save);
-        menu.add(0, MENU_ABOUT, 0, R.string.about_title).setIcon(
-                android.R.drawable.ic_menu_info_details);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /* Handles item selections */
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         switch (item.getItemId()) {
-            case MENU_SHARE_TEXT:
+            case R.id.menu_share_text:
                 // TODO: Doesn't work on facebook
                 // http://bugs.developers.facebook.net/show_bug.cgi?id=16728
                 intent.setType("text/plain");
@@ -116,14 +105,14 @@ public class Main extends Activity {
                 intent.putExtra(Intent.EXTRA_TEXT, Cow.LF + cow.getFinalCow());
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
                 break;
-            case MENU_COPY:
+            case R.id.menu_copy:
                 ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).setText(cow.getFinalCow());
                 Toast.makeText(this, R.string.toast_copy, Toast.LENGTH_SHORT).show();
                 break;
-            case MENU_ABOUT:
-                showDialog(MENU_ABOUT);
+            case R.id.menu_about:
+                showDialog(R.id.menu_about);
                 break;
-            case MENU_SHARE_IMAGE:
+            case R.id.menu_share_image:
                 new ShareImage().execute();
                 break;
             default:
@@ -135,7 +124,7 @@ public class Main extends Activity {
     protected Dialog onCreateDialog(int id) {
         Dialog dialog = null;
         switch (id) {
-            case MENU_ABOUT:
+            case R.id.menu_about:
                 // TODO: Make the link clickable with setMovementMethod()
                 final SpannableString msg = new SpannableString(getString(R.string.about_message));
                 Linkify.addLinks(msg, Linkify.WEB_URLS);
