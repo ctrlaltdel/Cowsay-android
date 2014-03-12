@@ -191,6 +191,7 @@ public class Main extends Activity {
 
     private class ShareImage extends AsyncTask<Void, Void, Boolean> {
 
+        private Bitmap bitmap;
         private String path;
         private int width;
         private int height;
@@ -201,14 +202,14 @@ public class Main extends Activity {
             width = outputView.getWidth();
             height = outputView.getLineHeight() * outputView.getLineCount();
             outputView.layout(0, 0, width, height);
+            // Create image
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            outputView.draw(c);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // Create image
-            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(bitmap);
-            outputView.draw(c);
             // Save image
             path = Images.Media.insertImage(getContentResolver(), bitmap,
                     getString(R.string.app_name), null);
