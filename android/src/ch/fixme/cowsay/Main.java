@@ -112,6 +112,7 @@ public class Main extends Activity {
                 showDialog(R.id.menu_about);
                 break;
             case R.id.menu_share_image:
+                Toast.makeText(this, R.string.toast_share_image, Toast.LENGTH_SHORT).show();
                 new ShareImage().execute();
                 break;
             default:
