@@ -20,5 +20,5 @@
     <string name="about_message">Port of the original command line application "cowsay" for the Android mobile platform.
         This little application was made by some FIXME.CH hackerspace members during the 28C3 in Berlin.\n\n
         Cowsay is distributed under the same licensing terms as Perl: the Artistic License or the GNU General Public License.\n\n
-        https://github.com/ctrlaltdel/Cowsay-android</string>
+        https://github.com/rorist/Cowsay-android</string>
 </resources>
