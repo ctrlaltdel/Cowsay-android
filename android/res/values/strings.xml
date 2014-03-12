@@ -4,6 +4,7 @@
     <string name="type_prompt">Select a Cow :</string>
     <string name="face_prompt">Select a face :</string>
     <string name="btn_close">Close</string>
+    <string name="menu_share">Share</string>
     <string name="menu_share_text">Share as text</string>
     <string name="menu_share_image">Share as image</string>
     <string name="menu_copy">Copy to clipboard</string>
